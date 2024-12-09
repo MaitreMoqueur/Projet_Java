@@ -10,7 +10,7 @@ public class Pioche {
     private List<Carte> cartes = new ArrayList<>();
     private static final String[] tab_couleurs = {"A", "B", "C", "D", "E", "F"};
 
-    public Pioche(int version) {
+    public Pioche() {
         for (String couleur : tab_couleurs) {
             for (int numero = 1; numero <= 9; numero++) {
                 cartes.add(new Carte(numero, couleur));
