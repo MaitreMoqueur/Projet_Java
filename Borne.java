@@ -18,20 +18,22 @@ public class Borne {
         this.cartesJoueur2 = new ArrayList<>();
         this.etat = Etat.LIBRE; // Par défaut, la borne est libre
     }
-
+/// METHODE AJOUTER CARTE A CONDENSER AVEC JOUER CARTE ?
     // Ajoute une carte pour un joueur
+    
     public void ajouterCarte(Joueur joueur, String carte) {
         if (etat != Etat.LIBRE) {
             System.out.println("Cette borne a déjà été revendiquée.");
             return;
         }
-
-        if (joueur instanceof JoueurReel) {
+    
+        // Vérifie quel joueur joue et ajoute la carte à la liste correspondante
+        if (joueur == joueur1) { // joueur1 représente le premier joueur
             cartesJoueur1.add(carte);
-            System.out.println("Carte " + carte + " ajoutée pour le joueur réel.");
-        } else if (joueur instanceof JoueurIA) {
+        } else if (joueur == joueur2) { // joueur2 représente le second joueur
             cartesJoueur2.add(carte);
-            System.out.println("Carte " + carte + " ajoutée pour l'IA.");
+        } else {
+            System.out.println("Joueur inconnu !");
         }
     }
 
