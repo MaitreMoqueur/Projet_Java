@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Pioche {
-    private int nombre_carte = 54;
+    private int nombre_cartes = 54;
     private List<Carte> cartes = new ArrayList<>();
     private static final String[] tab_couleurs = {"A", "B", "C", "D", "E", "F"};
 
@@ -16,18 +16,18 @@ public class Pioche {
                 cartes.add(new Carte(numero, couleur));
             }
         }
-
         Collections.shuffle(cartes, new Random());
     }
 
     public Carte tirerCarte() {
-        if (cartes.isEmpty()) {
+        if (getNombreDeCartes() == 0) {
             throw new IllegalStateException("La pioche est vide !");
         }
-        return cartes.remove(cartes.size() - 1);
+        this.nombre_cartes--;
+        return cartes.remove(this.nombre_cartes);
     }
 
     public int getNombreDeCartes() {
-        return cartes.size();
+        return this.nombre_cartes;
     }
 }
