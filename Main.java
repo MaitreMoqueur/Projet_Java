@@ -1,4 +1,4 @@
-package Projet_java;
+import com.shottenTotten.model;
 
 public class Main {
     public static void main(String[] args) {
