@@ -111,16 +111,14 @@ class JoueurIA extends Joueur {
 
 public class Main {
     public static void main(String[] args) {
-        // Joueur réel
         Joueur joueurReel = new JoueurReel("Alice", Arrays.asList("As de Coeur", "Roi de Pique"));
         System.out.println(joueurReel);
 
-        // IA
         IA iaFacile = new IA(0); // Difficulté facile
         Joueur joueurIA = new JoueurIA("Bot1", Arrays.asList("10 de Carreau", "9 de Trèfle"), iaFacile);
         System.out.println(joueurIA);
 
-        // Ajout de points
+        
         joueurReel.ajouterPoint();
         joueurIA.ajouterPoint();
 

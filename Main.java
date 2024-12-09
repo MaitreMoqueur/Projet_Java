@@ -9,5 +9,16 @@ public class Main {
         Main main1 = new Main(pioche);
         Main main2 = new Main(pioche);
 
+        //Boucle de Jeu
+            // Tour Joueur 1
+            //check Conditions de victoire
+            // Tour Joueur 2 
+            //Check Conditions de victoire 
+            
+
+
+
+
+
     }
 }
