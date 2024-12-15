@@ -8,9 +8,9 @@ abstract class Joueur {
     protected int score = 0;
     protected Hand main;
 
-    public Joueur(String nom, Pioche pioche) {
-        this.pseudo = nom;
-        this.main = new Hand(pioche);
+    public Joueur(String pseudo, Hand main) {
+        this.pseudo = pseudo;
+        this.main = main;
     }
 
     public String getPseudo() {
@@ -29,19 +29,25 @@ abstract class Joueur {
         this.score++;
     }
 
-    public Carte jouerCarte(int position_carte) {
-        this.main.nombre_cartes--;
-        return this.main.cartes.remove(cartes[i-1]);
-    }
+    public abstract Carte jouerCarte(int position_carte);
 
-    public void revendiquerBorne(Borne borne) {
-        Borne.revendiquer(pseudo);
-    }
+    public abstract void revendiquerBorne(Borne borne, Joueur joueur);
     
 }
 
 class JoueurReel extends Joueur {
-    public JoueurReel() {
+    public JoueurReel(String nom, Pioche pioche) {
+        super(nom, new Hand(pioche));
+    }
 
+    @Override
+    public Carte jouerCarte(int position_carte) {
+        this.main.nombre_cartes--;
+        return this.main.cartes.remove(position_carte);
+    }
+
+    @Override
+    public void revendiquerBorne(Borne borne, Joueur joueur) {
+        borne.revendiquer(joueur);
     }
 }

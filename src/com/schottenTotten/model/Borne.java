@@ -6,8 +6,8 @@ import java.util.List;
 public class Borne {
     public enum Etat {
         LIBRE,
-        REVENDIQUEE_J1,
-        REVENDIQUEE_J2,
+        CAPTUREE_J1,
+        CAPTUREE_J2
     }
 
     private List<Carte> cartesJoueur1;
@@ -52,7 +52,7 @@ public class Borne {
         }*/
     }
 
-    public void verifierConditions(Joueur joueur) {
+    public void revendiquer(Joueur joueur) {
         if ((cartesJoueur1.size() >= 3) || (cartesJoueur2.size() >= 3)) {
             
 
@@ -61,18 +61,6 @@ public class Borne {
         /*else {
             System.out.println("L'un des deux joueurs n'a pas posé 3 cartes sur la borne.");
         }*/
-        
-
-
-
-        if (cartesJoueur1.size() >= 3) {
-            etat = Etat.REVENDIQUE_J1;
-            return joueur.equals(joueur1);
-        } else if (cartesJoueur2.size() >= 3) {
-            etat = Etat.REVENDIQUE_J2;
-            return joueur.equals(joueur2);
-        }
-        return false;
     }
 
     public Etat getEtat() {
@@ -84,4 +72,6 @@ public class Borne {
         System.out.println("Cartes Joueur 2 : " + cartesJoueur2);
         System.out.println("État : " + etat);
     }
+
+    // getCarteslistes
 }
