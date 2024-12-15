@@ -20,13 +20,14 @@ public class GestionPartie {
     public void demarrerPartie() {
         view.afficherLancementPartie();
         while (partieEnCours) {
-            for (Joueur joueur : gestionJoueurs.getJoueurs()) {
+            for (Joueur joueur : joueurs) {
                 faireTourJoueur(joueur);
                 if (verifierConditionsVictoire()) {
                     partieEnCours = false;
                     break;
                 }
             }
+            numeroTour++;
         }
         annoncerFinPartie();
     }
