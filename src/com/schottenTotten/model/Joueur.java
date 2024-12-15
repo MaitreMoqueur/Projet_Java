@@ -42,7 +42,7 @@ class JoueurReel extends Joueur {
 
     @Override
     public Carte jouerCarte() {
-        //position_carte = fonction
+        int position_carte = 0;
         this.main.nombre_cartes--;
         return this.main.cartes.remove(position_carte);
     }

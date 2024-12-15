@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.schottenTotten.model.*;
 import com.schottenTotten.view.ConsoleView;
-import com.schottenTotten.ai.Ia;
+import com.schottenTotten.ai.*;
 
 public class GestionPartie {
     private final List<Joueur> joueurs;
