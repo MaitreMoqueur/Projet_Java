@@ -1,20 +1,21 @@
 # Variables
 SRC_DIR = src
 MODEL_DIR = $(SRC_DIR)/com/schottenTotten/model
+CONTROLLER_DIR = $(SRC_DIR)/com/schottenTotten/controller
+VIEW_DIR = $(SRC_DIR)/com/schottenTotten/view
+AI_DIR = $(SRC_DIR)/com/schottenTotten/ai
 BIN_DIR = bin
-MAIN_CLASS = Main
+MAIN_CLASS = com.schottenTotten.Main
 
-# Sources
+# Sources et classes
 SRC_FILES = \
-	$(SRC_DIR)/Borne.java \
-	$(SRC_DIR)/Hand.java \
-	$(SRC_DIR)/ConsoleView.java \
-	$(SRC_DIR)/MenuPrincipal.java \
-	$(SRC_DIR)/GestionPartie.java \
 	$(MODEL_DIR)/Carte.java \
-	$(MODEL_DIR)/Hand.java \
 	$(MODEL_DIR)/Joueur.java \
+	$(MODEL_DIR)/Borne.java \
 	$(MODEL_DIR)/Pioche.java \
+	$(CONTROLLER_DIR)/GestionPartie.java \
+	$(VIEW_DIR)/ConsoleView.java \
+	$(SRC_DIR)/MenuPrincipal.java \
 	$(SRC_DIR)/Main.java
 
 CLASS_FILES = $(patsubst $(SRC_DIR)/%.java,$(BIN_DIR)/%.class,$(SRC_FILES))
@@ -30,13 +31,7 @@ RM = rm -rf
 
 all: $(CLASS_FILES)
 
-# Règle pour les fichiers dans src
 $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
-	@$(MKDIR) $(dir $@)
-	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) $<
-
-# Règle pour les fichiers dans src/com/schottenTotten/model
-$(BIN_DIR)/com/schottenTotten/model/%.class: $(MODEL_DIR)/%.java
 	@$(MKDIR) $(dir $@)
 	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) $<
 
@@ -55,4 +50,3 @@ schottentotten_regles.pdf:
 
 PG22O_Projet_1.pdf:
 	@echo "PG22O_Projet_1.pdf est présent."
-

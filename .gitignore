@@ -1,0 +1,17 @@
+# Ignorer les fichiers binaires compilés
+bin/
+
+# Ignorer les fichiers générés par l'IDE (si applicable)
+*.class
+*.log
+*.tmp
+
+# Ignorer les configurations locales
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
