@@ -35,9 +35,9 @@ public class GestionPartie {
         view.afficherTourJoueur(joueur);
 
         if (joueur instanceof IA) {
-            faireTourIA((IA) joueur);
+            faireTourIA(joueur);
         } else {
-            faireTourJoueurReel((JoueurReel) joueur);
+            faireTourJoueurReel(joueur);
         }
     }
 
@@ -51,7 +51,7 @@ public class GestionPartie {
         view.afficherFinTour(joueurIA);
     }
 
-    private void faireTourJoueurReel(JoueurReel joueurReel) {
+    private void faireTourJoueurReel(Joueur joueurReel) {
         view.AfficherJoueurDebutTour(joueurReel);
         view.afficherEtatTour();
         view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
