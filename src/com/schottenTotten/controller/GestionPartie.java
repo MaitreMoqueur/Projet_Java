@@ -60,8 +60,8 @@ public class GestionPartie {
         //afficher carte jouée dans jouer.carte
         boolean continuer = true;
         while (continuer) {
-            afficherEtatTour()
-            afficherdemanderevendiquerborne()
+            afficherEtatTour();
+            afficherdemanderevendiquerborne();
             if (view.demanderSiRevendication()) {
                 int borne = view.demanderBorne();
                 revendiquerBorne(joueurReel, borne);
