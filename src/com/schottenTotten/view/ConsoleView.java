@@ -13,63 +13,188 @@ public class ConsoleView {
         System.out.flush(); 
     }
 
-    public void afficherBornes(List<Borne> bornes) {
-        nettoyerConsole(); 
-        System.out.println("=== Bornes ===");
+    public void afficherEtatTour(int numeroTour, Joueur joueurActuel, List<Borne> bornes) {
+        nettoyerConsole();
+
+        System.out.println("Tour n°" + numeroTour + "   -   " + joueurActuel.getPseudo() + " à vous de jouer");
+        System.out.println("==============================\n");
+
+        System.out.println("Cartes jouées sur les bornes adverses :");
         for (int i = 0; i < bornes.size(); i++) {
-            System.out.println("Borne " + (i + 1) + " :");
-            bornes.get(i).afficherEtat();
+            System.out.println("Borne " + (i + 1) + " - Cartes adverses : " + bornes.get(i).getCartesAdverses(joueurActuel));
+        }
+    
+        System.out.println("\nCartes alliées jouées sur les bornes :");
+        for (int i = 0; i < bornes.size(); i++) {
+            System.out.println("Borne " + (i + 1) + " - Cartes alliées : " + bornes.get(i).getCartesAlliees(joueurActuel));
+        }
+
+        System.out.println("\nMain du joueur :");
+        List<Carte> main = joueurActuel.getMain().getCartes();
+        for (int i = 0; i < main.size(); i++) {
+            System.out.println((i + 1) + ". " + main.get(i));
         }
     }
 
-    public void afficherMain(Joueur joueur) {
-        nettoyerConsole();
-        System.out.println("=== Main de " + joueur.getPseudo() + " ===");
-        joueur.getMain().getCartes().forEach(System.out::println);
+    public void afficherquellecarteJouer(){
+        System.out.println("=====================");
+        System.out.print("Quelle carte souhaitez-vous jouer ? ");
     }
 
-    public void afficherScore(List<Joueur> joueurs) {
-        nettoyerConsole();
-        System.out.println("=== Scores ===");
-        for (Joueur joueur : joueurs) {
-            System.out.println(joueur.getPseudo() + " : " + joueur.getScore() + " points");
+    public void afficherdemanderevendiquerborne(){
+        System.out.println("=====================");
+        System.out.print("Shouaitez vous revendiquer une bornes ? ");
+        System.out.println("Liste des bornes revendicables :");
+        for (int index : bornesRevendicables) {
+            System.out.println(index + 1 + ". Borne " + (index + 1));
         }
+        System.out.println("0. Non");
+        System.out.print("Votre choix : ");       
     }
 
-    public void afficherMessage(String message) {
+    public void afficherCarteJoueeSurBorne(Carte carte, int borneIndex) {
         nettoyerConsole();
-        System.out.println(message);
+        System.out.println("=================");
+        System.out.println("Carte " + carte + " jouée sur Borne " + (borneIndex + 1));
+        System.out.println("=================");
     }
 
-    public void afficherTourJoueur(Joueur joueur) {
+    public void afficherCaptureBorne(Joueur joueur, int borneIndex) {
+        nettoyerConsole(); // Nettoie l'affichage précédent
+        System.out.println("===========================");
+        System.out.println("🎉 Borne " + (borneIndex + 1) + " capturée par " + joueur.getPseudo() + " ! 🎉");
+        System.out.println("===========================");
+    }
+
+    public void afficherFinTour(Joueur joueur) {
+        nettoyerConsole(); // Nettoie l'affichage précédent
+        System.out.println("===========================");
+        System.out.println("🕒 Le tour de " + joueur.getPseudo() + " est terminé.");
+        System.out.println("Préparation du tour suivant...");
+        System.out.println("===========================");
+    }
+
+    public void afficherIATour(Joueur ia) {
+        nettoyerConsole(); // Nettoie l'affichage précédent
+        System.out.println("===========================");
+        System.out.println("🤖 " + ia.getPseudo() + " est en train de jouer...");
+        System.out.println("Veuillez patienter.");
+        System.out.println("===========================");
+    }
+
+    public void afficherIARevendication(Joueur ia, int borneIndex, boolean succes) {
         nettoyerConsole();
-        System.out.println("\n=== Tour de " + joueur.getPseudo() + " ===");
-    }
-
-    public void afficherCarteJouee(Joueur joueur, Carte carte) {
-        System.out.println(joueur.getPseudo() + " a joué : " + carte);
-    }
-
-    public void afficherRevendication(Joueur joueur, int borneIndex, boolean success) {
-        if (success) {
-            System.out.println(joueur.getPseudo() + " a revendiqué la borne " + (borneIndex + 1) + " avec succès !");
+        System.out.println("===========================");
+        if (succes) {
+            System.out.println("🤖 " + ia.getPseudo() + " a revendiqué avec succès la Borne " + (borneIndex + 1) + " !");
         } else {
-            System.out.println(joueur.getPseudo() + " a échoué à revendiquer la borne " + (borneIndex + 1) + ".");
+            System.out.println("🤖 " + ia.getPseudo() + " a tenté de revendiquer la Borne " + (borneIndex + 1) + ", mais a échoué.");
+        }
+        System.out.println("===========================");
+    }
+
+    public void afficherEcranVictoire(List<Joueur> joueurs, Joueur joueurActuel, Joueur vainqueur, int variante) {
+        nettoyerConsole(); // Nettoie l'affichage précédent
+
+        switch (variante) {
+            case 1: // Variante 1 : Vous avez gagné
+                afficherVictoireJoueur(joueurActuel);
+                break;
+            case 2: // Variante 2 : Vous avez perdu
+                afficherDefaiteJoueur(joueurActuel, vainqueur);
+                break;
+            case 3: // Variante 3 : Joueur X a gagné
+                afficherVictoireAutre(vainqueur, joueurs);
+                break;
+            default:
+                System.out.println("Variante inconnue. Aucun affichage de victoire.");
         }
     }
 
-    public void afficherVictoire(Joueur vainqueur) {
-        nettoyerConsole();
-        System.out.println("=== Victoire ===");
-        System.out.println("Le joueur " + vainqueur.getPseudo() + " a gagné !");
+    private void afficherVictoireJoueur(Joueur joueurActuel) {
+        System.out.println("==================================");
+        System.out.println("🏆 FÉLICITATIONS ! 🏆");
+        System.out.println("🎉 Vous avez gagné, " + joueurActuel.getPseudo() + " !");
+        System.out.println("Score final : " + joueurActuel.getScore() + " points");
+        System.out.println("==================================");
     }
 
-    public void afficherResultatsFinaux(List<Joueur> joueurs) {
-        nettoyerConsole();
-        System.out.println("=== Résultats finaux ===");
+    private void afficherDefaiteJoueur(Joueur joueurActuel, Joueur vainqueur) {
+        System.out.println("==================================");
+        System.out.println("😢 Vous avez perdu...");
+        System.out.println("Le joueur " + vainqueur.getPseudo() + " remporte la victoire avec " + vainqueur.getScore() + " points.");
+        System.out.println("Votre score : " + joueurActuel.getScore() + " points.");
+        System.out.println("==================================");
+    }
+
+    private void afficherVictoireAutre(Joueur vainqueur, List<Joueur> joueurs) {
+        System.out.println("==================================");
+        System.out.println("🏆 VICTOIRE 🏆");
+        System.out.println("🎖️ Le joueur " + vainqueur.getPseudo() + " a gagné avec " + vainqueur.getScore() + " points !");
+        System.out.println("==================================");
+
+        System.out.println("\nRésumé des scores :");
         for (Joueur joueur : joueurs) {
             System.out.println(joueur.getPseudo() + " : " + joueur.getScore() + " points");
         }
-        System.out.println("Merci d'avoir joué !");
+        System.out.println("\nMerci d'avoir joué !");
+    }
+
+            /**
+     * Affiche une séquence dynamique pour le lancement de la partie.
+     */
+    public void afficherLancementPartie() {
+        nettoyerConsole(); // Nettoie l'affichage précédent
+
+        // Étape 1 : Préparation de la partie
+        afficherMessageAvecPause("🔧 Préparation de la partie...", 1000);
+
+        // Étape 2 : Placement des bornes
+        afficherMessageAvecPause("📍 Placement des bornes...", 1000);
+
+        // Étape 3 : Création de la pioche
+        afficherMessageAvecPause("🎴 Création de la pioche...", 1000);
+
+        // Étape 4 : Distribution des cartes
+        afficherMessageAvecPause("🃏 Distribution des cartes...", 1000);
+
+        // Étape 5 : Affûtage des épées
+        afficherMessageAvecPause("⚔️ Affûtage des épées...", 1000);
+
+        // Message final
+        nettoyerConsole();
+        System.out.println("===========================");
+        System.out.println("🎮 La partie va commencer !");
+        System.out.println("===========================");
+        try {
+            Thread.sleep(1500); // Pause finale pour que le message reste un instant
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void afficherMessageAvecPause(String message, int pauseDurée) {
+        nettoyerConsole();
+        System.out.println("===========================");
+        System.out.println(message);
+        System.out.println("===========================");
+        try {
+            Thread.sleep(pauseDurée); // Pause pour laisser le message affiché
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public void afficherJoueurDebutTour(Joueur joueur, int numeroTour) {
+        nettoyerConsole(); // Nettoie l'affichage précédent
+        System.out.println("===========================");
+        System.out.println("🕒 Début du tour n°" + numeroTour);
+        System.out.println("🎮 C'est au tour de : " + joueur.getPseudo());
+        System.out.println("===========================");
+        try {
+            Thread.sleep(2000); // Pause pour laisser le joueur lire le message
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

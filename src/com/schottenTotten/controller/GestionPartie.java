@@ -17,6 +17,7 @@ public class GestionPartie {
     }
 
     public void demarrerPartie() {
+        afficherLancementPartie(;)
         while (partieEnCours) {
             for (Joueur joueur : gestionJoueurs.getJoueurs()) {
                 faireTourJoueur(joueur);
@@ -40,54 +41,46 @@ public class GestionPartie {
     }
 
     private void faireTourIA(JoueurIA joueurIA) {
-        view.afficherMessage(joueurIA.getNom() + " réfléchit...");
+        afficherIATour(joueurIA);
         // Logique spécifique à l'IA
+        //faire tour IA
+
+        afficherFinTour(joueurIA);
     }
 
     private void faireTourJoueurReel(JoueurReel joueurReel) {
-        view.afficherMessage(joueurReel.getNom() + ", c'est à vous de jouer !");
+        AfficherJoueurDebutTour(joueurReel);
+        afficherEtatTour();
+        afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
         joueurReel.jouerCarte(view.demanderCarteAJouer());
-
+        //afficher carte jouée dans jouer.carte
         boolean continuer = true;
         while (continuer) {
+            afficherEtatTour()
+            afficherdemanderevendiquerborne()
             if (view.demanderSiRevendication()) {
                 int borne = view.demanderBorne();
-                if (!revendiquerBorne(joueurReel, borne)) {
-                    view.afficherMessage("Revendication échouée !");
-                }
+                revendiquerBorne(joueurReel, borne);
+                //afficher message adequate dans revendiquerBorne
             } else {
-                continuer = false;
+                continuer = false;                                      
             }
         }
 
         joueurReel.piocherCarte();
-        view.afficherMessage("Vous avez pioché une carte.");
-    }
-
-    private boolean revendiquerBorne(JoueurReel joueur, int borne) {
-        if (borne < 1 || borne > 9) {
-            view.afficherMessage("Numéro de borne invalide !");
-            return false;
-        }
-
-        boolean revendicationReussie = joueur.revendiquerBorne(borne);
-        if (revendicationReussie) {
-            view.afficherMessage("Revendication réussie !");
-        }
-        return revendicationReussie;
+        //afficher la cartepiochée dans piocher carte;
+        afficherFinTour();
     }
 
     private boolean verifierConditionsVictoire() {
-        for (Joueur joueur : gestionJoueurs.getJoueurs()) {
-            if (joueur.getScore() >= 5) {
-                view.afficherVictoire(joueur.getNom());
-                return true;
-            }
-        }
-        return false;
+        //a faire
+        // affichage
     }
 
     private void annoncerFinPartie() {
-        view.afficherFinPartie(gestionJoueurs.getJoueurs());
+        afficherfindepartie();
+        // relancer ?
+        // fermer jeu
+        // Menu 
     }
 }
