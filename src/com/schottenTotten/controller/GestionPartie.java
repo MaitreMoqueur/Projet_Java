@@ -2,9 +2,7 @@ package com.schottenTotten.controller;
 
 import java.util.List;
 
-import com.schottenTotten.model.Joueur;
-import com.schottenTotten.model.JoueurIA;
-import com.schottenTotten.model.JoueurReel;
+import com.schottenTotten.model.*;
 import com.schottenTotten.view.ConsoleView;
 
 public class GestionPartie {

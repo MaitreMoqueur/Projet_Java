@@ -3,7 +3,7 @@ package com.schottenTotten.model;
 import java.util.List;
 import java.util.Arrays;
 
-abstract class Joueur {
+public abstract class Joueur {
     protected String pseudo;
     protected int score = 0;
     protected Hand main;
