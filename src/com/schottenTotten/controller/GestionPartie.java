@@ -8,12 +8,12 @@ import com.schottenTotten.model.JoueurReel;
 import com.schottenTotten.view.ConsoleView;
 
 public class GestionPartie {
-    private final GestionJoueurs gestionJoueurs;
+    private final List<Joueur> joueurs;
     private final ConsoleView view;
     private boolean partieEnCours;
 
-    public GestionPartie(GestionJoueurs gestionJoueurs, ConsoleView view) {
-        this.gestionJoueurs = gestionJoueurs;
+    public GestionPartie(List<Joueur> joueurs, ConsoleView view) {
+        this.joueurs = joueurs;
         this.view = view;
         this.partieEnCours = true;
     }
