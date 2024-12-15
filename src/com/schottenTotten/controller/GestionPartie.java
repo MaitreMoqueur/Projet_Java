@@ -10,6 +10,7 @@ public class GestionPartie {
     private final List<Joueur> joueurs;
     private final ConsoleView view;
     private boolean partieEnCours;
+    private int numeroTour;
 
     public GestionPartie(List<Joueur> joueurs, ConsoleView view) {
         this.joueurs = joueurs;
@@ -22,7 +23,7 @@ public class GestionPartie {
         while (partieEnCours) {
             for (Joueur joueur : joueurs) {
                 faireTourJoueur(joueur);
-                if (verifierConditionsVictoire()) {
+                if (verifierConditionVictoire()) {
                     partieEnCours = false;
                     break;
                 }
