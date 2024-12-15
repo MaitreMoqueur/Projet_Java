@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static int nombre_cartes = 6;
-    private List<Carte> cartes = new ArrayList<>();
+    protected static int nombre_cartes = 6;
+    protected List<Carte> cartes = new ArrayList<>();
+    Pioche pioche;
 
     public Hand(Pioche pioche) {
+        this.pioche = pioche;
         for (int i = 0; i < this.nombre_cartes; i++) {
-            cartes.add(pioche.tirerCarte());
+            cartes.add(this.pioche.tirerCarte());
         }
     }
 
