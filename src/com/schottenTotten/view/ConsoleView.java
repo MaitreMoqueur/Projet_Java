@@ -80,6 +80,7 @@ public class ConsoleView {
         System.out.println("🤖 " + ia.getPseudo() + " est en train de jouer...");
         System.out.println("Veuillez patienter.");
         System.out.println("===========================");
+
     }
 
     public void afficherIARevendication(Joueur ia, int borneIndex, boolean succes) {
@@ -173,6 +174,14 @@ public class ConsoleView {
         }
     }
 
+    private void afficherMessagesansPause(String message) {
+        System.out.println("===========================");
+        System.out.println(message);
+        System.out.println("===========================");
+
+    }
+
+
     private void afficherMessageAvecPause(String message, int pauseDurée) {
         nettoyerConsole();
         System.out.println("===========================");
@@ -184,7 +193,7 @@ public class ConsoleView {
             Thread.currentThread().interrupt();
         }
     }
-    
+
     public void afficherJoueurDebutTour(Joueur joueur, int numeroTour) {
         nettoyerConsole(); // Nettoie l'affichage précédent
         System.out.println("===========================");
@@ -197,4 +206,40 @@ public class ConsoleView {
             Thread.currentThread().interrupt();
         }
     }
+    
+    public void afficherBornesCaptureesParIA(List<Integer> bornesRevendiquees) {
+        nettoyerConsole(); // Nettoie l'affichage précédent
+
+        int decalage = 0; // Gère le décalage des "===" à chaque itération
+        for (int borneIndex : bornesRevendiquees) {
+            // Affiche les bordures décalées
+            for (int i = 0; i < decalage; i++) {
+                System.out.print(" ");
+            }
+            System.out.println("===========================");
+
+            // Affiche le message de capture pour cette borne
+            for (int i = 0; i < decalage; i++) {
+                System.out.print(" ");
+            }
+            System.out.println("⚔️ Borne " + (borneIndex + 1) + " capturée par l'IA !");
+            
+            // Attente avant la prochaine itération
+            try {
+                Thread.sleep(1500); // Pause de 1.5 seconde
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            // Augmente le décalage pour le prochain affichage
+            decalage += 2;
+        }
+
+        // Dernière bordure pour fermer l'affichage
+        for (int i = 0; i < decalage; i++) {
+            System.out.print(" ");
+        }
+        System.out.println("===========================");
+    }
+
 }

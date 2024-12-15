@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.schottenTotten.model.*;
 import com.schottenTotten.view.ConsoleView;
+import com.schottenTotten.ai.Ia;
 
 public class GestionPartie {
     private final List<Joueur> joueurs;
@@ -17,7 +18,7 @@ public class GestionPartie {
     }
 
     public void demarrerPartie() {
-        afficherLancementPartie();
+        view.afficherLancementPartie();
         while (partieEnCours) {
             for (Joueur joueur : gestionJoueurs.getJoueurs()) {
                 faireTourJoueur(joueur);
@@ -33,36 +34,36 @@ public class GestionPartie {
     private void faireTourJoueur(Joueur joueur) {
         view.afficherTourJoueur(joueur);
 
-        if (joueur instanceof JoueurIA) {
-            faireTourIA((JoueurIA) joueur);
+        if (joueur instanceof IA) {
+            faireTourIA((IA) joueur);
         } else {
             faireTourJoueurReel((JoueurReel) joueur);
         }
     }
 
-    private void faireTourIA(JoueurIA joueurIA) {
-        afficherIATour(joueurIA);
+    private void faireTourIA(IA joueurIA) {
+        view.afficherIATour(joueurIA);
         //Jouer carte IA
-        afficherCarteJoueeSurBorne();
+        view.afficherCarteJoueeSurBorne();
         //faire tour IA
-        afficherBornesCaptureesParIA();
+        view.afficherBornesCaptureesParIA();
 
-        afficherFinTour(joueurIA);
+        view.afficherFinTour(joueurIA);
     }
 
     private void faireTourJoueurReel(JoueurReel joueurReel) {
-        AfficherJoueurDebutTour(joueurReel);
-        afficherEtatTour();
-        afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
-        joueurReel.jouerCarte(view.demanderCarteAJouer());
+        view.AfficherJoueurDebutTour(joueurReel);
+        view.afficherEtatTour();
+        view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
+        joueurReel.jouerCarte();
         //afficher carte jouée dans jouer.carte
         boolean continuer = true;
         while (continuer) {
-            afficherEtatTour();
-            afficherdemanderevendiquerborne();
+            view.afficherEtatTour();
+            view.afficherdemanderevendiquerborne();
             if (view.demanderSiRevendication()) {
                 int borne = view.demanderBorne();
-                revendiquerBorne(joueurReel, borne);
+                view.revendiquerBorne(joueurReel, borne);
                 //afficher message adequate dans revendiquerBorne
             } else {
                 continuer = false;                                      
@@ -71,12 +72,12 @@ public class GestionPartie {
 
         joueurReel.piocherCarte();
         //afficher la cartepiochée dans piocher carte;
-        afficherFinTour();
+        view.afficherFinTour();
     }
 
 
     private void annoncerFinPartie() {
-        afficherfindepartie();
+        view.afficherfindepartie();
         // relancer ?
         // fermer jeu
         // Menu 
@@ -114,11 +115,11 @@ public class GestionPartie {
 
         // Vérifie les conditions de victoire
         if (bornesCapturéesJ1 >= 5 || maxBornesConsecutivesJ1 >= 3) {
-            afficherEcranVictoire(joueur1);
+            view.afficherEcranVictoire(joueur1);
             return joueur1;
         }
         if (bornesCapturéesJ2 >= 5 || maxBornesConsecutivesJ2 >= 3) {
-            afficherEcranVictoire(joueur2);
+            view.afficherEcranVictoire(joueur2);
             return joueur2;
         }
 
