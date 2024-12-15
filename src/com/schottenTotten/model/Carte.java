@@ -1,6 +1,6 @@
-package com.shottenTotten.model;
+package com.schottenTotten.model;
 
-public static class Carte {
+public class Carte {
     private int numero;
     private String couleur;
 

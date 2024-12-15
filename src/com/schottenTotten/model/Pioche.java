@@ -1,4 +1,4 @@
-package com.shottenTotten.model;
+package com.schottenTotten.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

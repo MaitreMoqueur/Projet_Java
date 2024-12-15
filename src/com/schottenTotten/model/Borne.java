@@ -1,46 +1,70 @@
+package com.schottenTotten.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Borne {
     public enum Etat {
         LIBRE,
-        REVENDIQUE_J1,
-        REVENDIQUE_J2,
-        BLOQUE
+        REVENDIQUEE_J1,
+        REVENDIQUEE_J2,
     }
 
-    private List<String> cartesJoueur1; // Cartes jouées par le joueur 1
-    private List<String> cartesJoueur2; // Cartes jouées par le joueur 2
-    private Etat etat;                 // État de la borne
+    private List<Carte> cartesJoueur1;
+    private List<Carte> cartesJoueur2;
+    private String pseudoJ1;
+    private String pseudoJ2;
+    private String dernier_joueur;
 
-    public Borne() {
+    private Etat etat;
+
+    public Borne(String pseudoJ1, String pseudoJ2) {
         this.cartesJoueur1 = new ArrayList<>();
         this.cartesJoueur2 = new ArrayList<>();
-        this.etat = Etat.LIBRE; // Par défaut, la borne est libre
+        this.pseudoJ1 = pseudoJ1;
+        this.pseudoJ2 = pseudoJ2;
+        this.etat = Etat.LIBRE;
     }
 /// METHODE AJOUTER CARTE A CONDENSER AVEC JOUER CARTE ?
-    // Ajoute une carte pour un joueur
-    
-    public void ajouterCarte(Joueur joueur, String carte) {
-        if (etat != Etat.LIBRE) {
+
+    public void ajouterCarte(Joueur joueur, Carte carte) {
+        if (etat == Etat.LIBRE) {
+            if (joueur.pseudo == this.pseudoJ1) {
+                if (cartesJoueur1.size() < 3) {
+                    cartesJoueur1.add(carte);
+                }
+                /*else {
+                    System.out.println("Il y a déjà 3 cartes jouées, impossible d'en rajouter une.");
+                }*/
+            } 
+            else {
+                if (cartesJoueur2.size() < 3) {
+                    cartesJoueur2.add(carte);
+                }
+                /*else {
+                    System.out.println("Il y a déjà 3 cartes jouées, impossible d'en rajouter une.");
+                }*/
+            }
+            this.dernier_joueur = joueur.pseudo;
+        }
+        /*else {
             System.out.println("Cette borne a déjà été revendiquée.");
-            return;
-        }
-    
-        // Vérifie quel joueur joue et ajoute la carte à la liste correspondante
-        if (joueur == joueur1) { // joueur1 représente le premier joueur
-            cartesJoueur1.add(carte);
-        } else if (joueur == joueur2) { // joueur2 représente le second joueur
-            cartesJoueur2.add(carte);
-        } else {
-            System.out.println("Joueur inconnu !");
-        }
+        }*/
     }
 
-    // Vérifie si les conditions pour revendiquer la borne sont remplies
-    public boolean verifierConditions(Joueur joueur) {
-        // Logique simplifiée pour illustrer
-        // Ici, on peut ajouter des règles spécifiques pour déterminer la revendication
+    public void verifierConditions(Joueur joueur) {
+        /*if ((cartesJoueur1.size() >= 3) || (cartesJoueur2.size() >= 3)) {
+            
+
+
+        }
+        /*else {
+            System.out.println("L'un des deux joueurs n'a pas posé 3 cartes sur la borne.");
+        }*/
+        
+
+
+
         if (cartesJoueur1.size() >= 3) {
             etat = Etat.REVENDIQUE_J1;
             return true;
