@@ -29,7 +29,7 @@ public abstract class Joueur {
         this.score++;
     }
 
-    public abstract Carte jouerCarte(int position_carte);
+    public abstract Carte jouerCarte();
 
     public abstract void revendiquerBorne(Borne borne, Joueur joueur);
     
@@ -41,7 +41,8 @@ class JoueurReel extends Joueur {
     }
 
     @Override
-    public Carte jouerCarte(int position_carte) {
+    public Carte jouerCarte() {
+        //position_carte = fonction
         this.main.nombre_cartes--;
         return this.main.cartes.remove(position_carte);
     }

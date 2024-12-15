@@ -2,13 +2,14 @@ package com.schottenTotten.ai;
 
 import java.util.List;
 import java.util.Arrays;
-import com.shottenTotten.model;
+import com.shottenTotten.model.*;
 
-public class IA {
+class IA extends Joueur {
     private int difficulte; // 0 = Facile, 1 = Moyen, 2 = Difficile
 
-    public IA(int difficulte) {
+    public IA(int difficulte, String nom, Pioche pioche) {
         this.difficulte = difficulte;
+        super(nom, new Hand(pioche));
     }
 
     public int getDifficulte() {
@@ -16,7 +17,7 @@ public class IA {
     }
 
     @Override
-    public jouerCarte() {
+    public Carte jouerCarte() {
         if (difficulte == 0) {
             if (this.main.nombre_cartes > 0) {
                 Random random = new Random();

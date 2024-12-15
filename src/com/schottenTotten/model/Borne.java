@@ -58,9 +58,9 @@ public class Borne {
 
 
         }
-        /*else {
+        else {
             System.out.println("L'un des deux joueurs n'a pas posé 3 cartes sur la borne.");
-        }*/
+        }
     }
 
     public Etat getEtat() {
