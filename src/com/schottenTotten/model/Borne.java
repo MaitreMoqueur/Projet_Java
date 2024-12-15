@@ -19,13 +19,12 @@ public class Borne {
     private Etat etat;
 
     public Borne(String pseudoJ1, String pseudoJ2) {
-        this.cartesJoueur1 = new ArrayList<>();
-        this.cartesJoueur2 = new ArrayList<>();
+        cartesJoueur1 = new ArrayList<>();
+        cartesJoueur2 = new ArrayList<>();
         this.pseudoJ1 = pseudoJ1;
         this.pseudoJ2 = pseudoJ2;
-        this.etat = Etat.LIBRE;
+        etat = Etat.LIBRE;
     }
-/// METHODE AJOUTER CARTE A CONDENSER AVEC JOUER CARTE ?
 
     public void ajouterCarte(Joueur joueur, Carte carte) {
         if (etat == Etat.LIBRE) {
@@ -45,33 +44,116 @@ public class Borne {
                     System.out.println("Il y a déjà 3 cartes jouées, impossible d'en rajouter une.");
                 }*/
             }
-            this.dernier_joueur = joueur.pseudo;
+            dernier_joueur = joueur.pseudo;
         }
         /*else {
             System.out.println("Cette borne a déjà été revendiquée.");
         }*/
     }
 
+    private boolean estSuiteCouleur(List<Carte> cartes) {
+        return estCouleur(cartes) && estSuite(cartes);
+    }
+
+    private boolean estBrelan(List<Carte> cartes) {
+        int valeur1 = cartes.get(0).getNumero();
+        int valeur2 = cartes.get(1).getNumero();
+        int valeur3 = cartes.get(2).getNumero();
+
+        if ((valeur1 == valeur2) && (valeur2 == valeur3)) {
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
+
+    private boolean estCouleur(List<Carte> cartes) {
+        String couleur1 = cartes.get(0).getCouleur();
+        String couleur2 = cartes.get(1).getCouleur();
+        String couleur3 = cartes.get(2).getCouleur();
+
+        if ((couleur1 == couleur2) && (couleur2 == couleur3)) {
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
+
+    private boolean estSuite(List<Carte> cartes) {
+        cartes.sort((c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()));
+
+        if ((cartes.get(0).getNumero() + 1 == cartes.get(1).getNumero()) && (cartes.get(1).getNumero() + 1 == cartes.get(2).getNumero())) {
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
+
+    private int somme(List<Carte> cartes) {
+        int valeur1 = cartes.get(0).getNumero();
+        int valeur2 = cartes.get(1).getNumero();
+        int valeur3 = cartes.get(2).getNumero();
+
+        return valeur1 + valeur2 + valeur3;
+    }
+
+    private int evaluerCombo(List<Carte> cartes) {
+        if (estSuiteCouleur(cartes)) {
+            return 5;
+        } 
+        else if (estBrelan(cartes)) {
+            return 4;
+        } 
+        else if (estCouleur(cartes)) {
+            return 3;
+        } 
+        else if (estSuite(cartes)) {
+            return 2;
+        } 
+        else {
+            return 1;
+        }
+    }
+
     public void revendiquer(Joueur joueur) {
         if ((cartesJoueur1.size() >= 3) || (cartesJoueur2.size() >= 3)) {
-            
+            int combo1 = evaluerCombo(cartesJoueur1);
+            int combo2 = evaluerCombo(cartesJoueur2);
 
+            if (combo1 > combo2) || ( (combo1 == combo2) && (somme(cartesJoueur1) > somme(cartesJoueur2)) ) {
+                etat = Etat.CAPTUREE_J1;
+            }
+            else if (combo2 > combo1) || ( (combo1 == combo2) && (somme(cartesJoueur2) > somme(cartesJoueur1)) ) {
+                etat = Etat.CAPTUREE_J2;
+            }
+            else { //combos égaux et sommes égales donc c'est l'avant-dernier qui gagne la borne
+                if (dernier_joueur.equals(pseudoJ1)) {
+                    etat = Etat.CAPTUREE_J2;
+                }
+                else {
+                    etat = Etat.CAPTUREE_J1;
+                }
+            }
 
         }
-        else {
+        /*else {
             System.out.println("L'un des deux joueurs n'a pas posé 3 cartes sur la borne.");
-        }
+        }*/
     }
 
     public Etat getEtat() {
         return etat;
     }
 
-    public void afficherEtat() {
-        System.out.println("Cartes Joueur 1 : " + cartesJoueur1);
-        System.out.println("Cartes Joueur 2 : " + cartesJoueur2);
-        System.out.println("État : " + etat);
+    public List<Carte> getList(Joueur joueur) {
+        if (joueur.pseudo == this.pseudoJ1) {
+            return this.cartesJoueur1;
+        }
+        else {
+            return this.cartesJoueur2;
+        }
     }
-
-    // getCarteslistes
 }
