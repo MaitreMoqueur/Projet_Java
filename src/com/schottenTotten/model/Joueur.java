@@ -45,23 +45,3 @@ class JoueurReel extends Joueur {
 
     }
 }
-
-class IA {
-    private int difficulte; // 0 = Facile, 1 = Moyen, 2 = Difficile
-
-    public IA(int difficulte) {
-        this.difficulte = difficulte;
-    }
-
-    public int getDifficulte() {
-        return difficulte;
-    }
-
-    public void setDifficulte(int difficulte) {
-        if (difficulte >= 0 && difficulte <= 2) {
-            this.difficulte = difficulte;
-        } else {
-            throw new IllegalArgumentException("Difficulté invalide : " + difficulte);
-        }
-    }
-}

@@ -6,42 +6,65 @@ import java.util.List;
 public class Borne {
     public enum Etat {
         LIBRE,
-        REVENDIQUE_J1,
-        REVENDIQUE_J2,
-        BLOQUE
+        REVENDIQUEE_J1,
+        REVENDIQUEE_J2,
     }
 
-    private Joueur joueur1;
-    private Joueur joueur2;
-    private List<String> cartesJoueur1;
-    private List<String> cartesJoueur2;
+    private List<Carte> cartesJoueur1;
+    private List<Carte> cartesJoueur2;
+    private String pseudoJ1;
+    private String pseudoJ2;
+    private String dernier_joueur;
+
     private Etat etat;
 
-    public Borne(Joueur joueur1, Joueur joueur2) {
-        this.joueur1 = joueur1;
-        this.joueur2 = joueur2;
+    public Borne(String pseudoJ1, String pseudoJ2) {
         this.cartesJoueur1 = new ArrayList<>();
         this.cartesJoueur2 = new ArrayList<>();
+        this.pseudoJ1 = pseudoJ1;
+        this.pseudoJ2 = pseudoJ2;
         this.etat = Etat.LIBRE;
     }
+/// METHODE AJOUTER CARTE A CONDENSER AVEC JOUER CARTE ?
 
-    public void jouerCarte(Joueur joueur, String carte) {
-        if (etat != Etat.LIBRE) {
+    public void ajouterCarte(Joueur joueur, Carte carte) {
+        if (etat == Etat.LIBRE) {
+            if (joueur.pseudo == this.pseudoJ1) {
+                if (cartesJoueur1.size() < 3) {
+                    cartesJoueur1.add(carte);
+                }
+                /*else {
+                    System.out.println("Il y a déjà 3 cartes jouées, impossible d'en rajouter une.");
+                }*/
+            } 
+            else {
+                if (cartesJoueur2.size() < 3) {
+                    cartesJoueur2.add(carte);
+                }
+                /*else {
+                    System.out.println("Il y a déjà 3 cartes jouées, impossible d'en rajouter une.");
+                }*/
+            }
+            this.dernier_joueur = joueur.pseudo;
+        }
+        /*else {
             System.out.println("Cette borne a déjà été revendiquée.");
-            return;
-        }
-
-        if (joueur.equals(joueur1)) {
-            cartesJoueur1.add(carte);
-        } else if (joueur.equals(joueur2)) {
-            cartesJoueur2.add(carte);
-        } else {
-            System.out.println("Joueur inconnu !");
-        }
+        }*/
     }
 
-    public boolean verifierConditions(Joueur joueur) {
-        // Logique personnalisée pour vérifier les combinaisons gagnantes
+    public void verifierConditions(Joueur joueur) {
+        /*if ((cartesJoueur1.size() >= 3) || (cartesJoueur2.size() >= 3)) {
+            
+
+
+        }
+        /*else {
+            System.out.println("L'un des deux joueurs n'a pas posé 3 cartes sur la borne.");
+        }*/
+        
+
+
+
         if (cartesJoueur1.size() >= 3) {
             etat = Etat.REVENDIQUE_J1;
             return joueur.equals(joueur1);
