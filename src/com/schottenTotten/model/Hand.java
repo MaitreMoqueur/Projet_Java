@@ -13,7 +13,7 @@ public class Hand {
         }
     }
 
-    public piocherCarte() {
+    public void piocherCarte() {
         this.nombre_cartes++;
         cartes.add(pioche.tirerCarte());
     }
