@@ -65,7 +65,11 @@ public class GestionPartie {
     }
 
     private boolean revendiquerBorne(JoueurReel joueur, int borne) {
-        // Logique simplifiée pour illustrer une revendication
+        if (borne < 1 || borne > 9) {
+            view.afficherMessage("Numéro de borne invalide !");
+            return false;
+        }
+
         boolean revendicationReussie = joueur.revendiquerBorne(borne);
         if (revendicationReussie) {
             view.afficherMessage("Revendication réussie !");
@@ -75,7 +79,7 @@ public class GestionPartie {
 
     private boolean verifierConditionsVictoire() {
         for (Joueur joueur : gestionJoueurs.getJoueurs()) {
-            if (joueur.getScore() >= 5) { // Exemple : victoire à 5 points
+            if (joueur.getScore() >= 5) {
                 view.afficherVictoire(joueur.getNom());
                 return true;
             }

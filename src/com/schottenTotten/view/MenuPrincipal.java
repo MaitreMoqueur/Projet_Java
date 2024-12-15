@@ -1,4 +1,6 @@
-  import java.util.Scanner;
+package com.schottenTotten.view;
+
+import java.util.Scanner;
 
 public class MenuPrincipal {
     private boolean settingsChoisis;
@@ -112,7 +114,6 @@ public class MenuPrincipal {
             difficulteIA2 = -1; // Pas de deuxième IA
         }
 
-
         // Choix de la variante
         System.out.println("Choisissez la variante :");
         System.out.println("1. Classique");
@@ -154,6 +155,4 @@ public class MenuPrincipal {
     public int getDifficulteIA2() {
         return difficulteIA2;
     }
-    
-
 }

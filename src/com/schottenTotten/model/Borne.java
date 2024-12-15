@@ -1,3 +1,5 @@
+package com.schottenTotten.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,100 +11,54 @@ public class Borne {
         BLOQUE
     }
 
-    private List<String> cartesJoueur1; // Cartes jouées par le joueur 1
-    private List<String> cartesJoueur2; // Cartes jouées par le joueur 2
-    private Etat etat;                 // État de la borne
+    private Joueur joueur1;
+    private Joueur joueur2;
+    private List<String> cartesJoueur1;
+    private List<String> cartesJoueur2;
+    private Etat etat;
 
-    public Borne() {
+    public Borne(Joueur joueur1, Joueur joueur2) {
+        this.joueur1 = joueur1;
+        this.joueur2 = joueur2;
         this.cartesJoueur1 = new ArrayList<>();
         this.cartesJoueur2 = new ArrayList<>();
-        this.etat = Etat.LIBRE; // Par défaut, la borne est libre
+        this.etat = Etat.LIBRE;
     }
-/// METHODE AJOUTER CARTE A CONDENSER AVEC JOUER CARTE ?
-    // Ajoute une carte pour un joueur
-    
-    public void ajouterCarte(Joueur joueur, String carte) {
+
+    public void jouerCarte(Joueur joueur, String carte) {
         if (etat != Etat.LIBRE) {
             System.out.println("Cette borne a déjà été revendiquée.");
             return;
         }
-    
-        // Vérifie quel joueur joue et ajoute la carte à la liste correspondante
-        if (joueur == joueur1) { // joueur1 représente le premier joueur
+
+        if (joueur.equals(joueur1)) {
             cartesJoueur1.add(carte);
-        } else if (joueur == joueur2) { // joueur2 représente le second joueur
+        } else if (joueur.equals(joueur2)) {
             cartesJoueur2.add(carte);
         } else {
             System.out.println("Joueur inconnu !");
         }
     }
 
-    // Vérifie si les conditions pour revendiquer la borne sont remplies
     public boolean verifierConditions(Joueur joueur) {
-        // Logique simplifiée pour illustrer
-        // Ici, on peut ajouter des règles spécifiques pour déterminer la revendication
+        // Logique personnalisée pour vérifier les combinaisons gagnantes
         if (cartesJoueur1.size() >= 3) {
             etat = Etat.REVENDIQUE_J1;
-            return true;
+            return joueur.equals(joueur1);
         } else if (cartesJoueur2.size() >= 3) {
             etat = Etat.REVENDIQUE_J2;
-            return true;
+            return joueur.equals(joueur2);
         }
         return false;
     }
 
-    // Retourne l'état actuel de la borne
     public Etat getEtat() {
         return etat;
     }
 
-    // Méthode pour afficher l'état de la borne
     public void afficherEtat() {
-        System.out.println("Borne : ");
         System.out.println("Cartes Joueur 1 : " + cartesJoueur1);
         System.out.println("Cartes Joueur 2 : " + cartesJoueur2);
         System.out.println("État : " + etat);
-    }
-}
-
-public class GestionBornes {
-    private List<Borne> bornes;
-
-    public GestionBornes() {
-        this.bornes = new ArrayList<>();
-        for (int i = 0; i < 9; i++) { // Créer 9 bornes
-            bornes.add(new Borne());
-        }
-    }
-
-    // Ajouter une carte à une borne
-    public void ajouterCarte(int indexBorne, Joueur joueur, String carte) {
-        if (indexBorne < 0 || indexBorne >= bornes.size()) {
-            System.out.println("Index de borne invalide !");
-            return;
-        }
-        bornes.get(indexBorne).ajouterCarte(joueur, carte);
-    }
-
-    // Vérifie les conditions de victoire pour toutes les bornes
-    public boolean verifierConditionsVictoire(Joueur joueur) {
-        int bornesRevendiquees = 0;
-
-        for (Borne borne : bornes) {
-            if (borne.verifierConditions(joueur)) {
-                bornesRevendiquees++;
-            }
-        }
-
-        return bornesRevendiquees >= 5; // Exemple : gagner avec 5 bornes revendiquées
-    }
-
-    // Afficher l'état des bornes
-    public void afficherBornes() {
-        for (int i = 0; i < bornes.size(); i++) {
-            System.out.println("Borne " + (i + 1) + " :");
-            bornes.get(i).afficherEtat();
-            System.out.println();
-        }
     }
 }

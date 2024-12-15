@@ -1,67 +1,75 @@
 package com.schottenTotten.view;
 
+import com.schottenTotten.model.Borne;
+import com.schottenTotten.model.Carte;
 import com.schottenTotten.model.Joueur;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class ConsoleView {
-    private final Scanner scanner;
 
-    public ConsoleView() {
-        this.scanner = new Scanner(System.in);
+    public void nettoyerConsole() {
+        System.out.print("\033[H\033[2J"); // ANSI escape codes : repositionne le curseur et efface l'écran
+        System.out.flush(); 
     }
 
-    public void afficherTourJoueur(Joueur joueur) {
-        System.out.println("\n=== Tour de " + joueur.getNom() + " ===");
+    public void afficherBornes(List<Borne> bornes) {
+        nettoyerConsole(); 
+        System.out.println("=== Bornes ===");
+        for (int i = 0; i < bornes.size(); i++) {
+            System.out.println("Borne " + (i + 1) + " :");
+            bornes.get(i).afficherEtat();
+        }
+    }
+
+    public void afficherMain(Joueur joueur) {
+        nettoyerConsole();
+        System.out.println("=== Main de " + joueur.getPseudo() + " ===");
+        joueur.getMain().getCartes().forEach(System.out::println);
+    }
+
+    public void afficherScore(List<Joueur> joueurs) {
+        nettoyerConsole();
+        System.out.println("=== Scores ===");
+        for (Joueur joueur : joueurs) {
+            System.out.println(joueur.getPseudo() + " : " + joueur.getScore() + " points");
+        }
     }
 
     public void afficherMessage(String message) {
+        nettoyerConsole();
         System.out.println(message);
     }
 
-    public boolean demanderSiRevendication() {
-        System.out.print("Voulez-vous tenter de revendiquer une borne ? (oui/non) : ");
-        String choix = scanner.nextLine().trim().toLowerCase();
-        return choix.equals("oui");
+    public void afficherTourJoueur(Joueur joueur) {
+        nettoyerConsole();
+        System.out.println("\n=== Tour de " + joueur.getPseudo() + " ===");
     }
 
-    public int demanderBorne() {
-        return demanderEntree("Entrez le numéro de la borne (1-9) : ", 1, 9);
+    public void afficherCarteJouee(Joueur joueur, Carte carte) {
+        System.out.println(joueur.getPseudo() + " a joué : " + carte);
     }
 
-    public String demanderCarteAJouer() {
-        System.out.print("Entrez la carte à jouer : ");
-        return scanner.nextLine();
+    public void afficherRevendication(Joueur joueur, int borneIndex, boolean success) {
+        if (success) {
+            System.out.println(joueur.getPseudo() + " a revendiqué la borne " + (borneIndex + 1) + " avec succès !");
+        } else {
+            System.out.println(joueur.getPseudo() + " a échoué à revendiquer la borne " + (borneIndex + 1) + ".");
+        }
     }
 
-    public void afficherVictoire(String nomGagnant) {
-        System.out.println("\n=== Victoire ===");
-        System.out.println("Le joueur " + nomGagnant + " a gagné !");
+    public void afficherVictoire(Joueur vainqueur) {
+        nettoyerConsole();
+        System.out.println("=== Victoire ===");
+        System.out.println("Le joueur " + vainqueur.getPseudo() + " a gagné !");
     }
 
-    public void afficherFinPartie(List<Joueur> joueurs) {
-        System.out.println("\n=== Fin de la partie ===");
+    public void afficherResultatsFinaux(List<Joueur> joueurs) {
+        nettoyerConsole();
+        System.out.println("=== Résultats finaux ===");
         for (Joueur joueur : joueurs) {
-            System.out.println(joueur.getNom() + " : " + joueur.getScore() + " points");
+            System.out.println(joueur.getPseudo() + " : " + joueur.getScore() + " points");
         }
         System.out.println("Merci d'avoir joué !");
-    }
-
-    private int demanderEntree(String prompt, int min, int max) {
-        int choix;
-        do {
-            System.out.print(prompt);
-            while (!scanner.hasNextInt()) {
-                System.out.println("Entrée invalide. Veuillez entrer un chiffre.");
-                scanner.next(); // Nettoie l'entrée non valide
-            }
-            choix = scanner.nextInt();
-            scanner.nextLine(); // Consomme le retour à la ligne
-            if (choix < min || choix > max) {
-                System.out.println("Choix invalide. Veuillez réessayer.");
-            }
-        } while (choix < min || choix > max);
-        return choix;
     }
 }

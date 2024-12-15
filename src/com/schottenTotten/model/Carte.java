@@ -1,6 +1,6 @@
-package com.shottenTotten.model;
+package com.schottenTotten.model;
 
-public static class Carte {
+public class Carte {
     private int numero;
     private String couleur;
 
@@ -15,5 +15,10 @@ public static class Carte {
 
     public String getCouleur() {
         return couleur;
+    }
+
+    @Override
+    public String toString() {
+        return couleur + " " + numero;
     }
 }
