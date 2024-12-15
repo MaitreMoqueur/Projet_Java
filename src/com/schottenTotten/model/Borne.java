@@ -53,7 +53,7 @@ public class Borne {
     }
 
     public void verifierConditions(Joueur joueur) {
-        /*if ((cartesJoueur1.size() >= 3) || (cartesJoueur2.size() >= 3)) {
+        if ((cartesJoueur1.size() >= 3) || (cartesJoueur2.size() >= 3)) {
             
 
 

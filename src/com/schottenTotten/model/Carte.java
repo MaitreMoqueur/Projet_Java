@@ -16,9 +16,4 @@ public class Carte {
     public String getCouleur() {
         return couleur;
     }
-
-    @Override
-    public String toString() {
-        return couleur + " " + numero;
-    }
 }

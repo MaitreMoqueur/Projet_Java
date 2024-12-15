@@ -29,7 +29,7 @@ abstract class Joueur {
         this.score++;
     }
 
-    public jouerCarte(int position_carte) {
+    public Carte jouerCarte(int position_carte) {
         this.main.nombre_cartes--;
         return this.main.cartes.remove(cartes[i-1]);
     }
