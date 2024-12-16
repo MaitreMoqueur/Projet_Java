@@ -119,30 +119,29 @@ public class Borne {
     }
 
     public void revendiquer(Joueur joueur) {
-        if ((cartesJoueur1.size() >= 3) || (cartesJoueur2.size() >= 3)) {
+        // Vérifie si les deux joueurs ont joué au moins 3 cartes
+        if (cartesJoueur1.size() >= 3 && cartesJoueur2.size() >= 3) {
             int combo1 = evaluerCombo(cartesJoueur1);
             int combo2 = evaluerCombo(cartesJoueur2);
-
-            if (combo1 > combo2) || ( (combo1 == combo2) && (somme(cartesJoueur1) > somme(cartesJoueur2)) ) {
+    
+            // Compare les combos pour déterminer le gagnant
+            if (combo1 > combo2 || (combo1 == combo2 && somme(cartesJoueur1) > somme(cartesJoueur2))) {
                 etat = Etat.CAPTUREE_J1;
-            }
-            else if (combo2 > combo1) || ( (combo1 == combo2) && (somme(cartesJoueur2) > somme(cartesJoueur1)) ) {
+            } else if (combo2 > combo1 || (combo1 == combo2 && somme(cartesJoueur2) > somme(cartesJoueur1))) {
                 etat = Etat.CAPTUREE_J2;
-            }
-            else { //combos égaux et sommes égales donc c'est l'avant-dernier qui gagne la borne
+            } else {
+                // En cas d'égalité parfaite, l'avant-dernier joueur gagne la borne
                 if (dernier_joueur.equals(pseudoJ1)) {
                     etat = Etat.CAPTUREE_J2;
-                }
-                else {
+                } else {
                     etat = Etat.CAPTUREE_J1;
                 }
             }
-
+        } else {
+            System.out.println("❌ Les conditions ne sont pas remplies pour revendiquer cette borne.");
         }
-        /*else {
-            System.out.println("L'un des deux joueurs n'a pas posé 3 cartes sur la borne.");
-        }*/
     }
+    
 
     public Etat getEtat() {
         return etat;

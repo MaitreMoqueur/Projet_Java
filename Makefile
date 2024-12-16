@@ -16,7 +16,8 @@ SRC_FILES = \
 	$(CONTROLLER_DIR)/GestionPartie.java \
 	$(VIEW_DIR)/ConsoleView.java \
 	$(SRC_DIR)/MenuPrincipal.java \
-	$(SRC_DIR)/Main.java
+	$(SRC_DIR)/Main.java \
+	$(AI_DIR)/Ia.java
 
 CLASS_FILES = $(patsubst $(SRC_DIR)/%.java,$(BIN_DIR)/%.class,$(SRC_FILES))
 
@@ -25,6 +26,8 @@ JAVAC = javac
 JAVA = java
 MKDIR = mkdir -p
 RM = rm -rf
+CODE = code
+
 
 # Règles
 .PHONY: all clean run
@@ -41,8 +44,10 @@ run: all
 clean:
 	$(RM) $(BIN_DIR)
 
+code:
+	$(CODE) $(SRC_FILES)
 # Fichiers supplémentaires (README et PDF inclus pour information)
-README.txt:
+README.txt: 
 	@echo "README.txt est présent."
 
 schottentotten_regles.pdf:

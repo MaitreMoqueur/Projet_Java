@@ -8,11 +8,12 @@ import com.schottenTotten.ai.*;
 
 public class GestionPartie {
     private final List<Joueur> joueurs;
+    private final List<Borne> bornes;
     private final ConsoleView view;
     private boolean partieEnCours;
     private int numeroTour;
 
-    public GestionPartie(List<Joueur> joueurs, ConsoleView view) {
+    public GestionPartie(List<Joueur> joueurs, List<Borne> bornes, ConsoleView view) {
         this.joueurs = joueurs;
         this.view = view;
         this.partieEnCours = true;
@@ -23,7 +24,8 @@ public class GestionPartie {
         while (partieEnCours) {
             for (Joueur joueur : joueurs) {
                 faireTourJoueur(joueur);
-                if (verifierConditionVictoire()) {
+                Joueur gagnant = verifierConditionVictoire();
+                if (gagnant != null) {
                     partieEnCours = false;
                     break;
                 }
@@ -34,10 +36,8 @@ public class GestionPartie {
     }
 
     private void faireTourJoueur(Joueur joueur) {
-        view.afficherTourJoueur(joueur);
-
         if (joueur instanceof IA) {
-            faireTourIA(joueur);
+            faireTourIA((IA) joueur);
         } else {
             faireTourJoueurReel(joueur);
         }
@@ -46,22 +46,23 @@ public class GestionPartie {
     private void faireTourIA(IA joueurIA) {
         view.afficherIATour(joueurIA);
         //Jouer carte IA
-        view.afficherCarteJoueeSurBorne();
+        Carte carte = joueurIA.jouerCarte();
+        view.afficherCarteJoueeSurBorne(carte, borne);
         //faire tour IA
-        view.afficherBornesCaptureesParIA();
+        view.afficherBornesCaptureesParIA(bornescapturees);
 
         view.afficherFinTour(joueurIA);
     }
 
     private void faireTourJoueurReel(Joueur joueurReel) {
-        view.AfficherJoueurDebutTour(joueurReel);
-        view.afficherEtatTour();
+        view.afficherJoueurDebutTour(joueurReel, numeroTour);
+        view.afficherEtatTour(numeroTour, joueurReel, bornes);
         view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
         joueurReel.jouerCarte();
         //afficher carte jouée dans jouer.carte
         boolean continuer = true;
         while (continuer) {
-            view.afficherEtatTour();
+            view.afficherEtatTour(numeroTour, joueurReel, bornes);
             view.afficherdemanderevendiquerborne();
             if (view.demanderSiRevendication()) {
                 int borne = view.demanderBorne();
@@ -74,18 +75,18 @@ public class GestionPartie {
 
         joueurReel.piocherCarte();
         //afficher la cartepiochée dans piocher carte;
-        view.afficherFinTour();
+        view.afficherFinTour(joueurReel);
     }
 
 
     private void annoncerFinPartie() {
-        view.afficherfindepartie();
+        view.afficherEcranVictoire();
         // relancer ?
         // fermer jeu
         // Menu 
     }
 
-    public Joueur verifierConditionVictoire(List<Borne> bornes, Joueur joueur1, Joueur joueur2) {
+    public Joueur verifierConditionVictoire() {
         int bornesCapturéesJ1 = 0;
         int bornesCapturéesJ2 = 0;
         int bornesConsecutivesJ1 = 0;
@@ -95,14 +96,14 @@ public class GestionPartie {
 
         for (Borne borne : bornes) {
             // Vérifie si la borne est capturée par le joueur 1
-            if (borne.getEtat() == Borne.Etat.REVENDIQUE_J1) {
+            if (borne.getEtat() == Borne.Etat.CAPTUREE_J1) {
                 bornesCapturéesJ1++;
                 bornesConsecutivesJ1++;
                 maxBornesConsecutivesJ1 = Math.max(maxBornesConsecutivesJ1, bornesConsecutivesJ1);
                 bornesConsecutivesJ2 = 0; // Réinitialise pour joueur 2
             } 
             // Vérifie si la borne est capturée par le joueur 2
-            else if (borne.getEtat() == Borne.Etat.REVENDIQUE_J2) {
+            else if (borne.getEtat() == Borne.Etat.CAPTUREE_J2) {
                 bornesCapturéesJ2++;
                 bornesConsecutivesJ2++;
                 maxBornesConsecutivesJ2 = Math.max(maxBornesConsecutivesJ2, bornesConsecutivesJ2);
@@ -117,12 +118,12 @@ public class GestionPartie {
 
         // Vérifie les conditions de victoire
         if (bornesCapturéesJ1 >= 5 || maxBornesConsecutivesJ1 >= 3) {
-            view.afficherEcranVictoire(joueur1);
-            return joueur1;
+            view.afficherEcranVictoire(joueurs, joueurs.get(0), null, numeroTour);
+            return joueurs.get(0);
         }
         if (bornesCapturéesJ2 >= 5 || maxBornesConsecutivesJ2 >= 3) {
-            view.afficherEcranVictoire(joueur2);
-            return joueur2;
+            view.afficherEcranVictoire(joueurs, joueurs.get(1), null, numeroTour);
+            return joueurs.get(1);
         }
 
         return null; // Aucun joueur ne remplit les conditions de victoire
