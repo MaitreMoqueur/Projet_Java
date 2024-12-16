@@ -12,10 +12,13 @@ SRC_FILES = \
 	$(MODEL_DIR)/Carte.java \
 	$(MODEL_DIR)/Joueur.java \
 	$(MODEL_DIR)/Borne.java \
+        $(MODEL_DIR)/GestionBornes.java \
+        $(MODEL_DIR)/Hand.java \
 	$(MODEL_DIR)/Pioche.java \
 	$(CONTROLLER_DIR)/GestionPartie.java \
 	$(VIEW_DIR)/ConsoleView.java \
-	$(SRC_DIR)/MenuPrincipal.java \
+	$(VIEW_DIR)/MenuPrincipal.java \
+	$(VIEW_DIR)/InputHandler.java \
 	$(SRC_DIR)/Main.java \
 	$(AI_DIR)/Ia.java
 
