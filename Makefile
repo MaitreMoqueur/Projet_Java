@@ -12,7 +12,6 @@ SRC_FILES = \
 	$(MODEL_DIR)/Carte.java \
 	$(MODEL_DIR)/Joueur.java \
 	$(MODEL_DIR)/Borne.java \
-        $(MODEL_DIR)/GestionBornes.java \
         $(MODEL_DIR)/Hand.java \
 	$(MODEL_DIR)/Pioche.java \
 	$(CONTROLLER_DIR)/GestionPartie.java \
