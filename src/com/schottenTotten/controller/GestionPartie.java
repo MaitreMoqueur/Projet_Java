@@ -13,6 +13,7 @@ public class GestionPartie {
     private boolean partieEnCours;
     private int numeroTour;
 
+
     public GestionPartie(List<Joueur> joueurs, List<Borne> bornes, ConsoleView view) {
         this.joueurs = joueurs;
         this.view = view;
@@ -45,29 +46,29 @@ public class GestionPartie {
 
     private void faireTourIA(IA joueurIA) {
         view.afficherIATour(joueurIA);
-        //Jouer carte IA
-        Carte carte = joueurIA.jouerCarte();
-        view.afficherCarteJoueeSurBorne(carte, borne);
-        //faire tour IA
-        view.afficherBornesCaptureesParIA(bornescapturees);
 
+        Carte carte = joueurIA.jouerCarte();
+        Borne borne = joueurIA.jouerBorne();
+        view.afficherCarteJoueeSurBorne(carte, borne.id_borne);   
+        List<Integer> bornescapturees = joueurIA.revendicationBorne();
+        view.afficherBornesCaptureesParIA(bornescapturees);
         view.afficherFinTour(joueurIA);
     }
 
     private void faireTourJoueurReel(Joueur joueurReel) {
         view.afficherJoueurDebutTour(joueurReel, numeroTour);
         view.afficherEtatTour(numeroTour, joueurReel, bornes);
-        view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
-        joueurReel.jouerCarte();
+        view.afficherquellecarteJouer();
+
+        view.jouerCarteReel(joueurIA);
         //afficher carte jouée dans jouer.carte
         boolean continuer = true;
         while (continuer) {
             view.afficherEtatTour(numeroTour, joueurReel, bornes);
             view.afficherdemanderevendiquerborne();
-            if (view.demanderSiRevendication()) {
-                int borne = view.demanderBorne();
+            if (view.demanderSiRevendication()) { 
+                boolean reussite = joueur.revendiquerBorne(bornes.get(), joueurReel);
                 view.revendiquerBorne(joueurReel, borne);
-                //afficher message adequate dans revendiquerBorne
             } else {
                 continuer = false;                                      
             }
