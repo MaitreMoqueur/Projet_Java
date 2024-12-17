@@ -242,4 +242,11 @@ public class ConsoleView {
         System.out.println("===========================");
     }
 
+    public void afficherfermeturejeu() {
+        System.out.println("===========================");
+        System.out.println("Merci d'avoir joué & à bientot ! ");
+        System.out.println("===========================");
+    }
+
+
 }
