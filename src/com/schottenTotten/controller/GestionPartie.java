@@ -14,8 +14,8 @@ public class GestionPartie {
     private int numeroTour;
 
     public GestionPartie(List<Joueur> joueurs, List<Borne> bornes, ConsoleView view) {
-        this.joueurs = joueurs;
-        this.liuste_bornes = bornes;
+        this.liste_joueurs = joueurs;
+        this.liste_bornes = bornes;
         this.view = view;
         this.partieEnCours = true;
     }

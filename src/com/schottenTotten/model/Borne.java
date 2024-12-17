@@ -12,17 +12,19 @@ public class Borne {
 
     private List<Carte> cartesJoueur1;
     private List<Carte> cartesJoueur2;
+    public int id_borne;
     private String pseudoJ1;
     private String pseudoJ2;
     private String dernier_joueur;
 
     private Etat etat;
 
-    public Borne(String pseudoJ1, String pseudoJ2) {
+    public Borne(String pseudoJ1, String pseudoJ2, int id) {
         cartesJoueur1 = new ArrayList<>();
         cartesJoueur2 = new ArrayList<>();
         this.pseudoJ1 = pseudoJ1;
         this.pseudoJ2 = pseudoJ2;
+        this.id_borne = id;
         etat = Etat.LIBRE;
     }
 
@@ -118,24 +120,32 @@ public class Borne {
         }
     }
 
-    public void revendiquer(Joueur joueur) {
+    public boolean revendiquer(Joueur joueur) {
         if (cartesJoueur1.size() >= 3 && cartesJoueur2.size() >= 3) {
             int combo1 = evaluerCombo(cartesJoueur1);
             int combo2 = evaluerCombo(cartesJoueur2);
-    
-            if (combo1 > combo2 || (combo1 == combo2 && somme(cartesJoueur1) > somme(cartesJoueur2))) {
-                etat = Etat.CAPTUREE_J1;
-            } else if (combo2 > combo1 || (combo1 == combo2 && somme(cartesJoueur2) > somme(cartesJoueur1))) {
-                etat = Etat.CAPTUREE_J2;
-            } else {
-                // En cas d'égalité parfaite, l'avant-dernier joueur gagne la borne
-                if (dernier_joueur.equals(pseudoJ1)) {
-                    etat = Etat.CAPTUREE_J2;
-                } else {
+
+            if (joueur.pseudo == pseudoJ1) {
+                if (combo1 > combo2 || (combo1 == combo2 && somme(cartesJoueur1) > somme(cartesJoueur2)) || (combo1 == combo2 && somme(cartesJoueur1) == somme(cartesJoueur2) && dernier_joueur.equals(pseudoJ2))) {
                     etat = Etat.CAPTUREE_J1;
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            }
+            else {
+                if (combo2 > combo1 || (combo1 == combo2 && somme(cartesJoueur2) > somme(cartesJoueur1)) || (combo1 == combo2 && somme(cartesJoueur1) == somme(cartesJoueur2) && dernier_joueur.equals(pseudoJ1))) {
+                    etat = Etat.CAPTUREE_J2;
+                    return true;
+                }
+                else {
+                    return false;
                 }
             }
-        } else {
+        } 
+        else {
             System.out.println("Les conditions ne sont pas remplies pour revendiquer cette borne.");
         }
     }
