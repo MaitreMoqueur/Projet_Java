@@ -7,6 +7,7 @@ public abstract class Joueur {
     protected String pseudo;
     protected int score = 0;
     protected Hand main;
+    protected List<int> bornes_gagnees ;
 
     public Joueur(String pseudo, Hand main) {
         this.pseudo = pseudo;
@@ -25,13 +26,19 @@ public abstract class Joueur {
         return this.main;
     }
 
+    public List<int> getBornes() {
+        return this.bornes_gagnees;
+    }
+
     public void victoire() {
         this.score++;
     }
 
-    public abstract Carte jouerCarte();
+    public abstract Carte jouerCarte(int position_carte);
+    
+    public abstract Borne jouerBorne(List<Borne> liste_bornes, int id_borne);
 
-    public abstract void revendiquerBorne(Borne borne, Joueur joueur);
+    public abstract boolean revendiquerBorne(Borne borne, Joueur joueur);
     
 }
 
@@ -41,14 +48,17 @@ class JoueurReel extends Joueur {
     }
 
     @Override
-    public Carte jouerCarte() {
-        int position_carte = 0;
+    public Carte jouerCarte(int position_carte) {
         this.main.nombre_cartes--;
         return this.main.cartes.remove(position_carte);
     }
 
     @Override
-    public void revendiquerBorne(Borne borne, Joueur joueur) {
-        borne.revendiquer(joueur);
+    public boolean revendiquerBorne(Borne borne, Joueur joueur) {
+        boolean gagnee = borne.revendiquer(joueur);
+        if (gagnee == true) {
+            bornes_gagnees.add(borne.id_borne);
+        }
+        return gagnee;
     }
 }
