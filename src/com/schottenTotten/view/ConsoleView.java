@@ -21,12 +21,13 @@ public class ConsoleView {
 
         System.out.println("Cartes jouées sur les bornes adverses :");
         for (int i = 0; i < bornes.size(); i++) {
-            System.out.println("Borne " + (i + 1) + " - Cartes adverses : " + bornes.get(i).getCartesAdverses(joueurActuel));
+            //FIX
+            System.out.println("Borne " + (i + 1) + " - Cartes adverses : " + bornes.get(i).getList(joueurActuel));
         }
     
         System.out.println("\nCartes alliées jouées sur les bornes :");
         for (int i = 0; i < bornes.size(); i++) {
-            System.out.println("Borne " + (i + 1) + " - Cartes alliées : " + bornes.get(i).getCartesAlliees(joueurActuel));
+            System.out.println("Borne " + (i + 1) + " - Cartes alliées : " + bornes.get(i).getList(joueurActuel));
         }
 
         System.out.println("\nMain du joueur :");
@@ -41,13 +42,14 @@ public class ConsoleView {
         System.out.print("Quelle carte souhaitez-vous jouer ? ");
     }
 
+    //FIX
     public void afficherdemanderevendiquerborne(){
         System.out.println("=====================");
         System.out.print("Shouaitez vous revendiquer une bornes ? ");
         System.out.println("Liste des bornes revendicables :");
-        for (int index : bornesRevendicables) {
-            System.out.println(index + 1 + ". Borne " + (index + 1));
-        }
+        //for (int index : bornesRevendicables) {
+        //    System.out.println(index + 1 + ". Borne " + (index + 1));
+        //}
         System.out.println("0. Non");
         System.out.print("Votre choix : ");       
     }
@@ -248,5 +250,5 @@ public class ConsoleView {
         System.out.println("===========================");
     }
 
-
+    
 }

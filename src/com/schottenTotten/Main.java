@@ -1,74 +1,108 @@
 package com.schottenTotten;
 
 import com.schottenTotten.controller.GestionPartie;
-import com.schottenTotten.model.Joueur;
-import com.schottenTotten.model.JoueurReel;
-import com.schottenTotten.model.IA;
-import com.schottenTotten.model.Pioche;
-import com.schottenTotten.view.MenuPrincipal;
+import com.schottenTotten.model.*;
+import com.schottenTotten.ai.IA;
+import com.schottenTotten.view.*;
+
+
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Étape 1 : Créer le menu principal
+        // Étape 1 : Créer le menu principal et la vue
         MenuPrincipal menu = new MenuPrincipal();
+        ConsoleView view = new ConsoleView();
         boolean continuerProgramme = true;
-        boolean relancerapide = false;
-        
+        boolean relanceRapide = false;
+
+        int modeDeJeu = -1;
+        int difficulteIA1 = -1;
+        int difficulteIA2 = -1;
+        int variante = -1;
+        //Joueur joueur1 = null;
+        //Joueur joueur2 = null;
+
         while (continuerProgramme) {
-            if (!relancerapide) {
-            // Étape 2 : Gérer le menu (configuration des paramètres du jeu)
+            if (!relanceRapide) {
+                // Étape 2 : Gérer le menu (configuration des paramètres du jeu)
                 if (!menu.gererMenu()) {
-                    view.afficherfermeturejeu();
+          //          view.afficherFermetureJeu();
                     return; // Fin du programme si l'utilisateur quitte le menu
-                }      
-            
-                int modeDeJeu = menu.getModeDeJeu();
-                int difficulteIA1 = menu.getDifficulteIA();
-                int difficulteIA2 = menu.getDifficulteIA2();
-                int variante = menu.getVariante();
+                }
+
+                // Récupérer les paramètres du menu principal
+                modeDeJeu = menu.getModeDeJeu();
+                difficulteIA1 = menu.getDifficulteIA();
+                difficulteIA2 = menu.getDifficulteIA2();
+                variante = menu.getVariante();
+                //joueur1 = menu.getJoueur1();
+                //joueur2 = menu.getJoueur2();
             }
 
             // Étape 3 : Initialiser les joueurs et les composants du jeu
             List<Joueur> joueurs = new ArrayList<>();
+            //joueurs.add(joueur1);
+            //joueurs.add(joueur2);
+            List<Borne> listeBornes = new ArrayList<>();
+            // Supposons que vous avez déjà récupéré les pseudos des joueurs
+
             Pioche pioche = new Pioche();
+
 
             switch (modeDeJeu) {
                 case 0: // Spectateur (IA vs IA)
-                    joueurs.add(new IA("IA1", pioche, difficulteIA1));
-                    joueurs.add(new IA("IA2", pioche, difficulteIA2));
+                    joueurs.add(new IA(difficulteIA1, "IA1", pioche));
+                    joueurs.add(new IA(difficulteIA2, "IA2", pioche));
                     break;
                 case 1: // Joueur vs IA
-                    joueurs.add(new JoueurReel("Joueur", pioche));
-                    joueurs.add(new IA("IA", pioche, difficulteIA1));
+                    joueurs.add(new Joueur("Joueur", pioche));
+                    joueurs.add(new IA(difficulteIA1, "IA", pioche));
                     break;
                 case 2: // Joueur vs Joueur
-                    joueurs.add(new JoueurReel("Joueur 1", pioche));
-                    joueurs.add(new JoueurReel("Joueur 2", pioche));
+                    joueurs.add(new Joueur("Joueur 1", pioche));
+                    joueurs.add(new Joueur("Joueur 2", pioche));
                     break;
                 default:
                     System.out.println("Mode de jeu invalide !");
                     return;
             }
 
-            // Étape 4 : Lancer la gestion de la partie
-            GestionPartie gestionPartie = new GestionPartie(joueurs, pioche);
-            gestionPartie.gererPartie();
+            String pseudoJ1 = joueurs.get(0).getPseudo();
+            String pseudoJ2 = joueurs.get(1).getPseudo();
 
-            // Étape 5 : gestion menu fin de partie
-            view.afficherMenuFin();
-            switch (view.InputHandler()){
-                case(0) : // Relance rapide
-                    relancerapide = true;
-                case(1) : //Menu principal
-                    relancerapide = false;
-                case(2) : // Quitter
+            for (int i = 0; i < 9; i++) { // Créez les 9 bornes nécessaires
+                listeBornes.add(new Borne(pseudoJ1, pseudoJ2, i));
+            }
+
+
+            // Étape 4 : Lancer la gestion de la partie
+            GestionPartie gestionPartie = new GestionPartie(joueurs, listeBornes, view);
+            gestionPartie.demarrerPartie();
+
+            // Étape 5 : Gestion du menu de fin de partie
+        //    view.afficherMenuFin();
+            int choix = InputHandler.recupererEntierUtilisateur();
+
+            switch (choix) {
+                case 0: // Relance rapide
+                    relanceRapide = true;
+                    break;
+                case 1: // Retour au menu principal
+                    relanceRapide = false;
+                    break;
+                case 2: // Quitter
                     continuerProgramme = false;
+                    break;
+                default:
+                    System.out.println("Choix invalide. Retour au menu principal.");
+                    relanceRapide = false;
             }
         }
-    }
 
-    view.afficherfermeturejeu();
+        //view.afficherFermetureJeu();
+    }
 }

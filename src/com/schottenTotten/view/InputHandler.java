@@ -1,10 +1,16 @@
 package com.schottenTotten.view;
 
+import com.schottenTotten.model.Borne;
+import com.schottenTotten.model.Carte;
+import com.schottenTotten.model.Joueur;
+
+import java.util.List;
+
 import java.util.Scanner;
 
 public class InputHandler {
 
-    public int recupererEntierUtilisateur() {
+    public static int recupererEntierUtilisateur() {
         Scanner scanner = new Scanner(System.in);
         int valeur = -1;
         boolean saisieValide = false;
@@ -21,8 +27,8 @@ public class InputHandler {
 
         return valeur;
     }
-
-    public int demanderSiRevendication(){
+//FIX mOI
+    public static int demanderSiRevendication(){
         boolean reponse_valide = false;
         int valeur = -1;
 
@@ -41,13 +47,13 @@ public class InputHandler {
                     break;
             }
         }
-        return valeur;
+        return 1;
     }
 
     public int jouerCarteReel(Joueur Joueur){
-        view.afficherquellecarteJouer();
+        //view.afficherquellecarteJouer();
         recupererEntierUtilisateur();
-
+        return 0;
           
     }
 

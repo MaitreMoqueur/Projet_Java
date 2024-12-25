@@ -26,6 +26,7 @@ public class Borne {
         this.pseudoJ2 = pseudoJ2;
         this.id_borne = id;
         etat = Etat.LIBRE;
+        this.dernier_joueur = "";
     }
 
     public void ajouterCarte(Joueur joueur, Carte carte) {
@@ -147,6 +148,7 @@ public class Borne {
         } 
         else {
             System.out.println("Les conditions ne sont pas remplies pour revendiquer cette borne.");
+            return false;
         }
     }
     

@@ -5,7 +5,7 @@ CONTROLLER_DIR = $(SRC_DIR)/com/schottenTotten/controller
 VIEW_DIR = $(SRC_DIR)/com/schottenTotten/view
 AI_DIR = $(SRC_DIR)/com/schottenTotten/ai
 BIN_DIR = bin
-MAIN_CLASS = com.schottenTotten.Main
+MAIN_CLASS = $(SRC_DIR)/com/schottenTotten/Main.java
 
 # Sources et classes
 SRC_FILES = \
@@ -18,8 +18,8 @@ SRC_FILES = \
 	$(VIEW_DIR)/ConsoleView.java \
 	$(VIEW_DIR)/MenuPrincipal.java \
 	$(VIEW_DIR)/InputHandler.java \
-	$(SRC_DIR)/Main.java \
-	$(AI_DIR)/Ia.java
+	$(MAIN_CLASS)\
+	$(AI_DIR)/IA.java
 
 CLASS_FILES = $(patsubst $(SRC_DIR)/%.java,$(BIN_DIR)/%.class,$(SRC_FILES))
 
@@ -41,7 +41,7 @@ $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
 	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) $<
 
 run: all
-	$(JAVA) -cp $(BIN_DIR) $(MAIN_CLASS)
+	java -cp bin com.schottenTotten.Main
 
 clean:
 	$(RM) $(BIN_DIR)

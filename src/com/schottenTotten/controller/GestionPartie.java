@@ -5,6 +5,7 @@ import java.util.List;
 import com.schottenTotten.model.*;
 import com.schottenTotten.view.ConsoleView;
 import com.schottenTotten.ai.*;
+import com.schottenTotten.view.InputHandler;
 
 public class GestionPartie {
     private final List<Joueur> liste_joueurs;
@@ -46,42 +47,61 @@ public class GestionPartie {
     }
 
     private void faireTourIA(IA joueurIA) {
+        //Message debut Tour IA
         view.afficherIATour(joueurIA);
+        
+        // IA joue une carte sur une borne
+        List<Integer> resultat = joueurIA.jouerCarteIA(liste_bornes);
+        int indexCarte = resultat.get(0);
+        Carte carte = joueurIA.getMain().getCarte(indexCarte);
+        int indexBorne = resultat.get(1);
+        view.afficherCarteJoueeSurBorne(carte, indexBorne);
 
-        Carte carte = joueurIA.jouerCarte();
-        Borne borne = joueurIA.jouerBorne();
-        view.afficherCarteJoueeSurBorne(carte, borne.id_borne);   
-        List<Integer> bornescapturees = joueurIA.revendicationBorne();
-        view.afficherBornesCaptureesParIA(bornescapturees);
+        //IA essaye de revendiquer des bornes
+        List<Integer> bornesCapturees = joueurIA.revendiquerBorneIA(liste_bornes);
+        view.afficherBornesCaptureesParIA(bornesCapturees);
+
+        // Fin du tour IA
         view.afficherFinTour(joueurIA);
     }
 
     private void faireTourJoueurReel(Joueur joueurReel) {
+        // Debut du Tour Joueur
         view.afficherJoueurDebutTour(joueurReel, numeroTour);
         view.afficherEtatTour(numeroTour, joueurReel, liste_bornes);
+
+        // Joueur Joue une carte 
         view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
-        joueurReel.jouerCarte();
+        //int indexCarte = view.demanderCarte();
+        //joueurReel.jouerCarte(indexCarte);
         //afficher carte jouée dans jouer.carte
+
+        // Joueur revendique des bornes
         boolean continuer = true;
         while (continuer) {
             view.afficherEtatTour(numeroTour, joueurReel, liste_bornes);
             view.afficherdemanderevendiquerborne();
-            if (view.demanderSiRevendication()) { 
-                boolean reussite = joueur.revendiquerBorne(bornes.get(), joueurReel);
-                view.revendiquerBorne(joueurReel, borne);
+            //FIX MOI
+            int resultat = InputHandler.demanderSiRevendication();
+            if (resultat != -1) {
+                Borne borne = liste_bornes.get(resultat);
+                boolean reussite = borne.revendiquer(joueurReel);
+                //view.revendiquerBorne(joueurReel, borne);
             } else {
                 continuer = false;                                      
             }
         }
 
-        joueurReel.piocherCarte();
-        //afficher la cartepiochée dans piocher carte;
+        // Joueur pioche une carte
+        joueurReel.getMain().piocherCarte();
+        
+        // Fin du tour
         view.afficherFinTour(joueurReel);
     }
 
 
     private void annoncerFinPartie() {
-        view.afficherEcranVictoire();
+        //view.afficherEcranVictoire();
         // relancer ?
         // fermer jeu
         // Menu 

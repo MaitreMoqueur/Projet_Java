@@ -19,4 +19,28 @@ public class Hand {
         this.nombre_cartes++;
         cartes.add(pioche.tirerCarte());
     }
+
+    public int getNombreCartes() {
+        return cartes.size();
+    }
+
+    public List<Carte> getCartes() {
+        return cartes;
+    }
+
+    public Carte retirerCarte(int index) {
+        if (index < 0 || index >= cartes.size()) {
+            throw new IndexOutOfBoundsException("Index de carte invalide !");
+        }
+        return cartes.remove(index);
+    }
+
+    public Carte getCarte(int indexCarte) {
+        if (indexCarte < 0 || indexCarte >= cartes.size()) {
+            throw new IndexOutOfBoundsException("Index de carte invalide !");
+        }
+        return cartes.get(indexCarte);
+    }
+
+
 }   

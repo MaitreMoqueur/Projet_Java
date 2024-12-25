@@ -3,15 +3,19 @@ package com.schottenTotten.model;
 import java.util.List;
 import java.util.Arrays;
 
-public abstract class Joueur {
+public class Joueur {
     protected String pseudo;
     protected int score = 0;
     protected Hand main;
-    protected List<int> bornes_gagnees ;
+    protected List<Integer> bornes_gagnees ;
 
-    public Joueur(String pseudo, Hand main) {
+    public Joueur(String pseudo, Pioche pioche) {
         this.pseudo = pseudo;
-        this.main = main;
+        this.main = new Hand(pioche);
+
+        for (int i = 0; i < 6; i++) {
+            this.main.piocherCarte();
+        }
     }
 
     public String getPseudo() {
@@ -26,7 +30,7 @@ public abstract class Joueur {
         return this.main;
     }
 
-    public List<int> getBornes() {
+    public List<Integer> getBornes() {
         return this.bornes_gagnees;
     }
 
@@ -34,26 +38,8 @@ public abstract class Joueur {
         this.score++;
     }
 
-    public abstract Carte jouerCarte(int position_carte);
-    
-    public abstract Borne jouerBorne(List<Borne> liste_bornes, int id_borne);
 
-    public abstract boolean revendiquerBorne(Borne borne, Joueur joueur);
-    
-}
 
-class JoueurReel extends Joueur {
-    public JoueurReel(String nom, Pioche pioche) {
-        super(nom, new Hand(pioche));
-    }
-
-    @Override
-    public Carte jouerCarte(int position_carte) {
-        this.main.nombre_cartes--;
-        return this.main.cartes.remove(position_carte);
-    }
-
-    @Override
     public boolean revendiquerBorne(Borne borne, Joueur joueur) {
         boolean gagnee = borne.revendiquer(joueur);
         if (gagnee == true) {
@@ -61,4 +47,11 @@ class JoueurReel extends Joueur {
         }
         return gagnee;
     }
+
+    public Carte jouerCarte(int position_carte) {
+        this.main.nombre_cartes--;
+        return this.main.cartes.remove(position_carte);
+    }
+
 }
+
