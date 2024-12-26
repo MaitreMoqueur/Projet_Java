@@ -61,6 +61,7 @@ public class GestionPartie {
         int indexCarte = resultat.get(0);
         Carte carte = joueurIA.getMain().getCarte(indexCarte);
         int indexBorne = resultat.get(1);
+        joueurIA.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
         view.afficherCarteJoueeSurBorne(carte, indexBorne);
 
         //IA essaye de revendiquer des bornes
