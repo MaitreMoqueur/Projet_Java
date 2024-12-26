@@ -1,4 +1,4 @@
-package com.schottenTotten.model;
+package main.java.com.schottenTotten.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
