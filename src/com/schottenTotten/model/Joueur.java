@@ -1,8 +1,5 @@
 package com.schottenTotten.model;
 
-import com.schottenTotten.model.Borne;
-import com.schottenTotten.model.Carte;
-import com.schottenTotten.model.CarteTactique;
 import java.util.List;
 import java.util.Arrays;
 
