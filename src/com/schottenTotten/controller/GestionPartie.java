@@ -23,11 +23,11 @@ public class GestionPartie {
         this.partieEnCours = true;
     }
 
-    public void demarrerPartie() {
+    public void demarrerPartie(Pioche pioche) {
         view.afficherLancementPartie();
         while (partieEnCours) {
             for (Joueur joueur : liste_joueurs) {
-                faireTourJoueur(joueur);
+                faireTourJoueur(joueur, pioche);
                 Joueur gagnant = verifierConditionVictoire();
                 if (gagnant != null) {
                     partieEnCours = false;
@@ -38,15 +38,15 @@ public class GestionPartie {
         }
     }
 
-    private void faireTourJoueur(Joueur joueur) {
+    private void faireTourJoueur(Joueur joueur, Pioche pioche) {
         if (joueur instanceof IA) {
-            faireTourIA((IA) joueur);
+            faireTourIA((IA) joueur, pioche);
         } else {
-            faireTourJoueurReel(joueur);
+            faireTourJoueurReel(joueur, pioche);
         }
     }
 
-    private void faireTourIA(IA joueurIA) {
+    private void faireTourIA(IA joueurIA, Pioche pioche) {
         //Message debut Tour IA
         view.afficherIATour(joueurIA);
         
@@ -59,15 +59,17 @@ public class GestionPartie {
         view.afficherCarteJoueeSurBorne(carte, indexBorne);
 
         //IA essaye de revendiquer des bornes
-        List<Integer> bornesRevendicables = getlistbornesrevendicabme(liste_bornes);
+        List<Integer> bornesRevendicables = getlistbornesrevendicable(liste_bornes);
         List<Integer> bornesCapturees = joueurIA.revendiquerBorneIA(liste_bornes, bornesRevendicables);
         view.afficherBornesCaptureesParIA(bornesCapturees);
 
+        // Joueur pioche une carte
+        joueurIA.getMain().piocherCarte(pioche);
         // Fin du tour IA
         view.afficherFinTour(joueurIA);
     }
 
-    private void faireTourJoueurReel(Joueur joueurReel) {
+    private void faireTourJoueurReel(Joueur joueurReel, Pioche pioche) {
         // Debut du Tour Joueur
         view.afficherJoueurDebutTour(joueurReel, numeroTour);
         view.afficherEtatTour(numeroTour, joueurReel, liste_joueurs, liste_bornes);
@@ -83,7 +85,7 @@ public class GestionPartie {
 
         boolean continuer = true;
         while (continuer) {
-            List<Integer> bornesRevendicables = getlistbornesrevendicabme(liste_bornes);
+            List<Integer> bornesRevendicables = getlistbornesrevendicable(liste_bornes);
             view.afficherEtatTour(numeroTour, joueurReel,liste_joueurs, liste_bornes);
             if (bornesRevendicables.size() > 0){
                 view.afficherdemanderevendiquerborne(bornesRevendicables);
@@ -108,7 +110,7 @@ public class GestionPartie {
         }
 
         // Joueur pioche une carte
-        joueurReel.getMain().piocherCarte();
+        joueurReel.getMain().piocherCarte(pioche);
         try {
             Thread.sleep(1000); // Pause finale pour que le message reste un instant
         } catch (InterruptedException e) {
@@ -117,7 +119,7 @@ public class GestionPartie {
         // Fin du tour
         view.afficherFinTour(joueurReel);
     }
-    private List<Integer> getlistbornesrevendicabme(List<Borne> listeBornes) {
+    private List<Integer> getlistbornesrevendicable(List<Borne> listeBornes) {
         List<Integer> bornesRevendicables = new ArrayList<>();
         for (Borne borne : listeBornes) {
             if (borne.getEtat() == Borne.Etat.LIBRE && 
