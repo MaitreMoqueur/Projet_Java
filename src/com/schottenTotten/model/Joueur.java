@@ -17,10 +17,6 @@ public class Joueur {
         this.pseudo = pseudo;
         this.carte_tactique_jouée = 0;
         this.main = new Hand(pioche);
-
-        for (int i = 0; i < 6; i++) {
-            this.main.piocherCarte();
-        }
     }
 
     public String getPseudo() {

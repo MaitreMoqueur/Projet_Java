@@ -83,7 +83,7 @@ public class Main {
 
             // Étape 4 : Lancer la gestion de la partie
             GestionPartie gestionPartie = new GestionPartie(joueurs, listeBornes, view);
-            gestionPartie.demarrerPartie();
+            gestionPartie.demarrerPartie(pioche);
 
             // Étape 5 : Gestion du menu de fin de partie
             ConsoleView.afficherMenuFin();

@@ -61,10 +61,10 @@ public class IA extends Joueur {
         throw new UnsupportedOperationException("Niveau difficile non encore implémenté.");
     }   
 
-    public List<Integer> revendiquerBorneIA(List<Borne> listeBornes, List<Integer> listeBornesRevdndicable) {
+    public List<Integer> revendiquerBorneIA(List<Borne> listeBornes, List<Integer> listeBornesRevendicable) {
         List<Integer> bornesCapturees = new ArrayList<>();
     
-        for (int i : listeBornesRevdndicable) {
+        for (int i : listeBornesRevendicable) {
             Borne borne = listeBornes.get(i);
     
             // Tente de revendiquer la borne
