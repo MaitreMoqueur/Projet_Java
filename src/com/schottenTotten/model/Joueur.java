@@ -14,10 +14,6 @@ public class Joueur {
     public Joueur(String pseudo, Pioche pioche) {
         this.pseudo = pseudo;
         this.main = new Hand(pioche);
-
-        for (int i = 0; i < 6; i++) {
-            this.main.piocherCarte();
-        }
     }
 
     public String getPseudo() {
