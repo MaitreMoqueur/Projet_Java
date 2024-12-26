@@ -30,11 +30,11 @@ public class IA extends Joueur {
         }
     
         switch (difficulte) {
-            case 0:
-                return jouerTourFacile(bornes, bornesjouable);
             case 1:
-                return jouerTourMoyen(bornes, bornesjouable);
+                return jouerTourFacile(bornes, bornesjouable);
             case 2:
+                return jouerTourMoyen(bornes, bornesjouable);
+            case 3:
                 return jouerTourDifficile(bornes, bornesjouable);
             default:
                 throw new IllegalStateException("Niveau de difficulté inconnu : " + difficulte);

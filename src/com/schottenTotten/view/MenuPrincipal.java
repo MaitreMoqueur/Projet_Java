@@ -5,8 +5,8 @@ import java.util.List;
 
 public class MenuPrincipal {
     private boolean settingsChoisis;
-    private int modeDeJeu;       // 0 = Spectateur, 1 = Joueur vs IA, 2 = Joueur vs Joueur
-    private int difficulteIA;    // 0 = Facile, 1 = Moyen, 2 = Difficile
+    private int modeDeJeu;       // 1 = Spectateur, 2 = Joueur vs IA, 3 = Joueur vs Joueur
+    private int difficulteIA;    // 1 = Facile, 2 = Moyen, 3 = Difficile
     private int difficulteIA2;   // Difficulté de la deuxième IA, utilisée uniquement pour le mode Spectateur
     private int variante;        // 1 = Classique, 2 = Tactique
     Scanner scanner = new Scanner(System.in);
@@ -101,7 +101,7 @@ public class MenuPrincipal {
 
     private void afficherCredits() {
         System.out.println("\n=== Crédits ===");
-        System.out.println("Développé par : [Ton Nom / Ton Équipe]");
+        System.out.println("Développé par : Philippe MOCQUERY & Florent MONANGE");
         System.out.println("=================");
         System.out.println("Appuyer sur n'importe quelle touche pour revenir au menu");
         if (scanner.hasNextLine()) {
@@ -115,34 +115,34 @@ public class MenuPrincipal {
 
         // Choix du mode de jeu
         System.out.println("Choisissez le mode de jeu :");
-        System.out.println("0. Spectateur (IA vs IA)");
-        System.out.println("1. Joueur vs IA");
-        System.out.println("2. Joueur vs Joueur");
-        modeDeJeu = demanderEntree(scanner, 0, 2);
+        System.out.println("1. Spectateur (IA vs IA)");
+        System.out.println("2. Joueur vs IA");
+        System.out.println("3. Joueur vs Joueur");
+        modeDeJeu = demanderEntree(scanner, 1, 3);
         ConsoleView.nettoyerConsole();
 
         // Choix de la difficulté si IA est impliquée
-        if (modeDeJeu == 0) {
+        if (modeDeJeu == 1) {
             System.out.println("Choisissez la difficulté de la première IA :");
-            System.out.println("0. Facile (aléatoire)");
-            System.out.println("1. Moyen (début de réflexion)");
-            System.out.println("2. Difficile (réflexion avancée)");
-            difficulteIA = demanderEntree(scanner, 0, 2);
+            System.out.println("1. Facile (aléatoire)");
+            System.out.println("2. Moyen (début de réflexion)");
+            System.out.println("3. Difficile (réflexion avancée)");
+            difficulteIA = demanderEntree(scanner, 1, 3);
             ConsoleView.nettoyerConsole();
 
             System.out.println("Choisissez la difficulté de la deuxième IA :");
-            System.out.println("0. Facile (aléatoire)");
-            System.out.println("1. Moyen (début de réflexion)");
-            System.out.println("2. Difficile (réflexion avancée)");
-            difficulteIA2 = demanderEntree(scanner, 0, 2);
+            System.out.println("1. Facile (aléatoire)");
+            System.out.println("2. Moyen (début de réflexion)");
+            System.out.println("3. Difficile (réflexion avancée)");
+            difficulteIA2 = demanderEntree(scanner, 1, 3);
             ConsoleView.nettoyerConsole();
 
-        } else if (modeDeJeu == 1) {
+        } else if (modeDeJeu == 2) {
             System.out.println("Choisissez la difficulté de l'IA :");
-            System.out.println("0. Facile (aléatoire)");
-            System.out.println("1. Moyen (début de réflexion)");
-            System.out.println("2. Difficile (réflexion avancée)");
-            difficulteIA = demanderEntree(scanner, 0, 2);
+            System.out.println("1. Facile (aléatoire)");
+            System.out.println("2. Moyen (début de réflexion)");
+            System.out.println("3. Difficile (réflexion avancée)");
+            difficulteIA = demanderEntree(scanner, 1, 3);
             difficulteIA2 = -1; // Pas de deuxième IA
             ConsoleView.nettoyerConsole();
         } else {

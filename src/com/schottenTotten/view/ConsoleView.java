@@ -54,20 +54,28 @@ public class ConsoleView {
     //FIX
     public void afficherdemanderevendiquerborne(List<Integer> listeBornesrevendicable){
         System.out.println("=====================");
-        System.out.print("Shouaitez vous revendiquer une bornes ? ");
-        System.out.println("Liste des bornes revendicables :");
-        for (int borne : listeBornesrevendicable) {
-                System.out.println(" ," + borne);
+        System.out.println("Souhaitez vous revendiquer une borne ? ");
         System.out.println("0. Non");
-        System.out.print("Votre choix : ");       
+        System.out.println("Liste des bornes revendicables :");
+        if (listeBornesrevendicable.size() == 1) {
+            System.out.println(listeBornesrevendicable.get(0));
+        } else if (listeBornesrevendicable.size() > 1) {
+            for (int i = 0; i < listeBornesrevendicable.size(); i++) {
+                if (i == listeBornesrevendicable.size() - 1) {
+                    System.out.print(listeBornesrevendicable.get(i));
+                } else {
+                    System.out.print(listeBornesrevendicable.get(i) + ", ");
+                }
+            }
         }
+        System.out.print("Votre choix : ");
     }
 
     public void afficherCarteJoueeSurBorne(Carte carte, int borneIndex) {
         nettoyerConsole();
         
         System.out.println("=================");
-        System.out.println("Carte " + carte.getNumero() + " " + carte.getCouleur() + " jouée sur Borne " + (borneIndex + 1));
+        System.out.println("Carte " + carte.getNumero() + " " + carte.getCouleur() + " jouée sur Borne " + (borneIndex));
         System.out.println("=================");
         try {
             Thread.sleep(1500); // Pause finale pour que le message reste un instant
@@ -79,7 +87,7 @@ public class ConsoleView {
     public void afficherCaptureBorne(Joueur joueur, int borneIndex) {
         nettoyerConsole(); // Nettoie l'affichage précédent
         System.out.println("===========================");
-        System.out.println("🎉 Borne " + (borneIndex + 1) + " capturée par " + joueur.getPseudo() + " ! 🎉");
+        System.out.println("🎉 Borne " + (borneIndex) + " capturée par " + joueur.getPseudo() + " ! 🎉");
         System.out.println("===========================");
         try {
             Thread.sleep(1500); // Pause finale pour que le message reste un instant

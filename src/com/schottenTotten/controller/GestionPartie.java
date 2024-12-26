@@ -83,7 +83,7 @@ public class GestionPartie {
         // Joueur Joue une carte
         view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
         int indexCarte = InputHandler.demanderEntree( 1, joueurReel.getMain().getNombreCartes())-1;
-        System.out.println("Sur quelle Borne ?");
+        System.out.print("Sur quelle Borne ? ");
         List<Integer> bornesjouable = getlistbornesjouable(liste_bornes, joueurReel);
         int indexBorne = InputHandler.inputinlist(bornesjouable);
         joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));

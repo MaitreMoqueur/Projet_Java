@@ -50,21 +50,21 @@ public class Main {
 
             Pioche pioche = new Pioche();
             
-            if (variante != 0){
+            if (variante != 1){
                 Pioche pioche_tactique = new Pioche();
             }
 
 
             switch (modeDeJeu) {
-                case 0: // Spectateur (IA vs IA)
+                case 1: // Spectateur (IA vs IA)
                     joueurs.add(new IA(difficulteIA1, "IA1", pioche));
                     joueurs.add(new IA(difficulteIA2, "IA2", pioche));
                     break;
-                case 1: // Joueur vs IA
+                case 2: // Joueur vs IA
                     joueurs.add(new Joueur("Joueur", pioche));
                     joueurs.add(new IA(difficulteIA1, "IA", pioche));
                     break;
-                case 2: // Joueur vs Joueur
+                case 3: // Joueur vs Joueur
                     joueurs.add(new Joueur("Joueur 1", pioche));
                     joueurs.add(new Joueur("Joueur 2", pioche));
                     break;
