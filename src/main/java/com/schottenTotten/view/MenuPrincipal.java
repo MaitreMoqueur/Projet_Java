@@ -1,4 +1,4 @@
-package com.schottenTotten.view;
+package main.java.com.schottenTotten.view;
 
 import java.util.Scanner;
 import java.util.List;

@@ -1,8 +1,8 @@
-package com.schottenTotten.view;
+package main.java.com.schottenTotten.view;
 
-import com.schottenTotten.model.Borne;
-import com.schottenTotten.model.Carte;
-import com.schottenTotten.model.Joueur;
+import main.java.com.schottenTotten.model.Borne;
+import main.java.com.schottenTotten.model.Carte;
+import main.java.com.schottenTotten.model.Joueur;
 
 import java.util.List;
 

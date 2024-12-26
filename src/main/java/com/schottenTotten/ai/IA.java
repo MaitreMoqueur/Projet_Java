@@ -1,9 +1,9 @@
-package com.schottenTotten.ai;
+package main.java.com.schottenTotten.ai;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.schottenTotten.model.*;
+import main.java.com.schottenTotten.model.*;
 import java.util.Comparator;
 
 

@@ -1,11 +1,11 @@
 # Variables
 SRC_DIR = src
-MODEL_DIR = $(SRC_DIR)/com/schottenTotten/model
-CONTROLLER_DIR = $(SRC_DIR)/com/schottenTotten/controller
-VIEW_DIR = $(SRC_DIR)/com/schottenTotten/view
-AI_DIR = $(SRC_DIR)/com/schottenTotten/ai
+MODEL_DIR = $(SRC_DIR)/main/java/com/schottenTotten/model
+CONTROLLER_DIR = $(SRC_DIR)/main/java/com/schottenTotten/controller
+VIEW_DIR = $(SRC_DIR)/main/java/com/schottenTotten/view
+AI_DIR = $(SRC_DIR)/main/java/com/schottenTotten/ai
 BIN_DIR = bin
-MAIN_CLASS = $(SRC_DIR)/com/schottenTotten/Main.java
+MAIN_CLASS = $(SRC_DIR)/main/java/com/schottenTotten/Main.java
 
 # Sources et classes
 SRC_FILES = \

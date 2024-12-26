@@ -1,12 +1,12 @@
-package com.schottenTotten.controller;
+package main.java.com.schottenTotten.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.schottenTotten.model.*;
-import com.schottenTotten.view.ConsoleView;
-import com.schottenTotten.ai.*;
-import com.schottenTotten.view.InputHandler;
+import main.java.com.schottenTotten.model.*;
+import main.java.com.schottenTotten.view.ConsoleView;
+import main.java.com.schottenTotten.ai.*;
+import main.java.com.schottenTotten.view.InputHandler;
 
 public class GestionPartie {
     private final List<Joueur> liste_joueurs;

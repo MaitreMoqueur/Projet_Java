@@ -1,4 +1,4 @@
-package com.schottenTotten.model;
+package main.java.com.schottenTotten.model;
 
 public class Carte {
     private int numero;

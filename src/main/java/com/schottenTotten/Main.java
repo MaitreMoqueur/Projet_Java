@@ -1,9 +1,9 @@
-package com.schottenTotten;
+package main.java.com.schottenTotten;
 
-import com.schottenTotten.controller.GestionPartie;
-import com.schottenTotten.model.*;
-import com.schottenTotten.ai.IA;
-import com.schottenTotten.view.*;
+import main.java.com.schottenTotten.controller.GestionPartie;
+import main.java.com.schottenTotten.model.*;
+import main.java.com.schottenTotten.ai.IA;
+import main.java.com.schottenTotten.view.*;
 
 
 
