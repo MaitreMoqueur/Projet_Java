@@ -8,7 +8,7 @@ import java.util.Random;
 public class Pioche {
     private int nombre_cartes = 54;
     private List<Carte> cartes = new ArrayList<>();
-    private static final String[] tab_couleurs = {"A", "B", "C", "D", "E", "F"};
+    private static final String[] tab_couleurs = {"Rouge", "Bleu", "Charbon", "Jaune", "Orange", "Violet"};
 
     public Pioche() {
         for (String couleur : tab_couleurs) {

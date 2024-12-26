@@ -50,12 +50,22 @@ public class InputHandler {
         return 1;
     }
 
-    public int jouerCarteReel(Joueur Joueur){
-        //view.afficherquellecarteJouer();
-        recupererEntierUtilisateur();
-        return 0;
-          
+    
+    public static int demanderEntree(int min, int max) {
+        Scanner scanner = new Scanner(System.in);
+        int choix;
+        do {
+            System.out.print("Votre choix (" + min + "-" + max + ") : ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Entrée invalide. Veuillez entrer un chiffre.");
+                scanner.next();
+            }
+            choix = scanner.nextInt();
+            if (choix < min || choix > max) {
+                System.out.println("Choix invalide. Veuillez réessayer.");
+            }
+        } while (choix < min || choix > max);
+        return choix;
     }
-
 
 }

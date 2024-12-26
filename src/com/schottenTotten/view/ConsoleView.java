@@ -8,32 +8,41 @@ import java.util.List;
 
 public class ConsoleView {
 
-    public void nettoyerConsole() {
+    public static void nettoyerConsole() {
         System.out.print("\033[H\033[2J"); // ANSI escape codes : repositionne le curseur et efface l'écran
         System.out.flush(); 
     }
 
-    public void afficherEtatTour(int numeroTour, Joueur joueurActuel, List<Borne> bornes) {
+    public void afficherEtatTour(int numeroTour, Joueur joueurActuel, List<Joueur> joueurs, List<Borne> bornes) {
         nettoyerConsole();
 
         System.out.println("Tour n°" + numeroTour + "   -   " + joueurActuel.getPseudo() + " à vous de jouer");
         System.out.println("==============================\n");
 
-        System.out.println("Cartes jouées sur les bornes adverses :");
         for (int i = 0; i < bornes.size(); i++) {
-            //FIX
-            System.out.println("Borne " + (i + 1) + " - Cartes adverses : " + bornes.get(i).getList(joueurActuel));
+            List<Carte> cartesBorne = bornes.get(i).getList(joueurs.get(0));
+            System.out.println("Borne " + (i + 1) + " - Cartes de " + joueurs.get(0).getPseudo() + ":");
+            
+            for (Carte carte : cartesBorne) {
+                System.out.println("    " + carte.getNumero() + " " + carte.getCouleur());
+            }
         }
-    
-        System.out.println("\nCartes alliées jouées sur les bornes :");
+        System.out.println("____________________");
         for (int i = 0; i < bornes.size(); i++) {
-            System.out.println("Borne " + (i + 1) + " - Cartes alliées : " + bornes.get(i).getList(joueurActuel));
+            List<Carte> cartesBorne = bornes.get(i).getList(joueurs.get(1));
+            System.out.println("Borne " + (i + 1) + " - Cartes de " + joueurs.get(1).getPseudo() + ":");
+            
+            for (Carte carte : cartesBorne) {
+                System.out.println("    " + carte.getNumero() + " " + carte.getCouleur());
+            }
         }
 
         System.out.println("\nMain du joueur :");
         List<Carte> main = joueurActuel.getMain().getCartes();
+
         for (int i = 0; i < main.size(); i++) {
-            System.out.println((i + 1) + ". " + main.get(i));
+            Carte carte = main.get(i);
+            System.out.println((i + 1) + ". " + carte.getNumero() + " " + carte.getCouleur());
         }
     }
 

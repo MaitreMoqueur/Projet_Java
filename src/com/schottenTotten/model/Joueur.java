@@ -1,5 +1,7 @@
 package com.schottenTotten.model;
 
+import com.schottenTotten.model.Borne;
+import com.schottenTotten.model.Carte;
 import java.util.List;
 import java.util.Arrays;
 
@@ -48,8 +50,9 @@ public class Joueur {
         return gagnee;
     }
 
-    public Carte jouerCarte(int position_carte) {
+    public Carte jouerCarte(int position_carte, Borne Borne) {
         this.main.nombre_cartes--;
+        Borne.ajouterCarte(this, this.getMain().getCarte(position_carte));
         return this.main.cartes.remove(position_carte);
     }
 

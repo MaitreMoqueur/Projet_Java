@@ -68,18 +68,19 @@ public class GestionPartie {
     private void faireTourJoueurReel(Joueur joueurReel) {
         // Debut du Tour Joueur
         view.afficherJoueurDebutTour(joueurReel, numeroTour);
-        view.afficherEtatTour(numeroTour, joueurReel, liste_bornes);
+        view.afficherEtatTour(numeroTour, joueurReel, liste_joueurs, liste_bornes);
 
         // Joueur Joue une carte 
         view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
-        //int indexCarte = view.demanderCarte();
-        //joueurReel.jouerCarte(indexCarte);
-        //afficher carte jouée dans jouer.carte
+        int indexCarte = InputHandler.demanderEntree( 1, joueurReel.getMain().getNombreCartes())-1;
+        System.out.println("Sur quelle Borne ?");
+        int indexBorne = InputHandler.demanderEntree( 1, 10)-1;
+        joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
 
-        // Joueur revendique des bornes
+
         boolean continuer = true;
         while (continuer) {
-            view.afficherEtatTour(numeroTour, joueurReel, liste_bornes);
+            view.afficherEtatTour(numeroTour, joueurReel,liste_joueurs, liste_bornes);
             view.afficherdemanderevendiquerborne();
             //FIX MOI
             int resultat = InputHandler.demanderSiRevendication();
