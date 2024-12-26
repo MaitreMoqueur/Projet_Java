@@ -43,7 +43,7 @@ public class IA extends Joueur {
         int positionCarte = random.nextInt(this.main.getNombreCartes());
         int positionBorneDansJouable = random.nextInt(bornesjouable.size());
         int positionBorne = bornesjouable.get(positionBorneDansJouable);
-        bornes.get(positionBorne).ajouterCarte(this, this.getMain().getCarte(positionCarte));
+        jouerCarte(positionCarte, bornes.get(positionBorne));
         return List.of(positionCarte, positionBorne);
     }
     
