@@ -48,6 +48,18 @@ clean:
 
 code:
 	$(CODE) $(SRC_FILES)
+
+compil_tests: $(CLASS_FILES) $(TEST_CLASS_FILES)
+
+$(TEST_CLASS_FILES): $(SRC_DIR)/%.java
+	@$(MKDIR) $(dir $@)
+	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) $<
+
+tests: compil_tests
+	$(JAVA) -cp $(BIN_DIR):path/to/junit-platform-console-standalone.jar \
+		org.junit.platform.console.ConsoleLauncher --scan-classpath
+
+
 # Fichiers supplémentaires (README et PDF inclus pour information)
 README.txt: 
 	@echo "README.txt est présent."
