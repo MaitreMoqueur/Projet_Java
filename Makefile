@@ -5,6 +5,7 @@ CONTROLLER_DIR = $(SRC_DIR)/main/java/com/schottenTotten/controller
 VIEW_DIR = $(SRC_DIR)/main/java/com/schottenTotten/view
 AI_DIR = $(SRC_DIR)/main/java/com/schottenTotten/ai
 BIN_DIR = bin
+TEST_DIR = src/test/java/com/schottenTotten
 MAIN_CLASS = $(SRC_DIR)/main/java/com/schottenTotten/Main.java
 
 # Sources et classes
@@ -21,7 +22,17 @@ SRC_FILES = \
 	$(MAIN_CLASS)\
 	$(AI_DIR)/IA.java
 
+TEST_FILES = \
+	$(TEST_DIR)/model/JoueurTest.java \
+	$(TEST_DIR)/model/CarteTest.java \
+        $(TEST_DIR)/model/PiocheTest.java \
+        $(TEST_DIR)/model/HandTest.java \
+        $(TEST_DIR)/model/BorneTest.java \
+        $(TEST_DIR)/controller/GestionPartieTest.java \
+        $(TEST_DIR)/ai/IATest.java
+
 CLASS_FILES = $(patsubst $(SRC_DIR)/%.java,$(BIN_DIR)/%.class,$(SRC_FILES))
+TEST_CLASS_FILES = $(patsubst $(TEST_DIR)/%.java,$(BIN_DIR)/test/%.class,$(TEST_FILES))
 
 # Commandes
 JAVAC = javac
@@ -34,11 +45,15 @@ CODE = code
 # Règles
 .PHONY: all clean run
 
-all: $(CLASS_FILES)
+all: $(CLASS_FILES) $(TEST_CLASS_FILES)
 
 $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
 	@$(MKDIR) $(dir $@)
 	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) $<
+
+$(BIN_DIR)/test/%.class: $(TEST_DIR)/%.java
+	@$(MKDIR) $(dir $@)
+	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR):$(TEST_DIR) -cp $(LIB_DIR)/junit-jupiter-api-5.11.4.jar:$(LIB_DIR)/junit-jupiter-engine-5.11.4.jar $<
 
 run: all
 	java -cp bin com.schottenTotten.Main
@@ -49,14 +64,10 @@ clean:
 code:
 	$(CODE) $(SRC_FILES)
 
-compil_tests: $(CLASS_FILES) $(TEST_CLASS_FILES)
-
-$(TEST_CLASS_FILES): $(SRC_DIR)/%.java
-	@$(MKDIR) $(dir $@)
-	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) $<
+compil_tests: $(TEST_CLASS_FILES)
 
 tests: compil_tests
-	$(JAVA) -cp $(BIN_DIR):path/to/junit-platform-console-standalone.jar \
+	$(JAVA) -cp $(BIN_DIR):./junit-platform-console-standalone-1.11.4.jar \
 		org.junit.platform.console.ConsoleLauncher --scan-classpath
 
 
