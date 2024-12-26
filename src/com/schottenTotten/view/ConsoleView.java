@@ -161,7 +161,7 @@ public class ConsoleView {
         System.out.println("==================================");
         System.out.println("🏆 FÉLICITATIONS ! 🏆");
         System.out.println("🎉 Vous avez gagné, " + joueurActuel.getPseudo() + " !");
-        System.out.println("Score final : " + joueurActuel.getScore() + " points");
+        //System.out.println("Score final : " + joueurActuel.getScore() + " points");
         System.out.println("==================================");
     }
 
@@ -169,18 +169,18 @@ public class ConsoleView {
         System.out.println("==================================");
         System.out.println("😢 Vous avez perdu...");
         System.out.println("Le joueur " + vainqueur.getPseudo() + " remporte la victoire avec " + vainqueur.getScore() + " points.");
-        System.out.println("Votre score : " + perdant.getScore() + " points.");
+        //System.out.println("Votre score : " + perdant.getScore() + " points.");
         System.out.println("==================================");
     }
 
     private void afficherVictoireAutre(Joueur vainqueur, Joueur perdant) {
         System.out.println("==================================");
         System.out.println("🏆 VICTOIRE 🏆");
-        System.out.println("🎖️ Le joueur " + vainqueur.getPseudo() + " a gagné avec " + vainqueur.getScore() + " points !");
+        System.out.println("🎖️ Le joueur " + vainqueur.getPseudo());// + " a gagné avec " + vainqueur.getScore() + " points !");
         System.out.println("==================================");
 
         System.out.println("\nRésumé des scores :");
-        System.out.println(perdant.getPseudo() + " : " + perdant.getScore() + " points");
+        System.out.println(perdant.getPseudo());// + " : " + perdant.getScore() + " points");
 
         System.out.println("\nMerci d'avoir joué !");
     }
