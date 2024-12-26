@@ -27,6 +27,11 @@ public class GestionPartie {
         view.afficherLancementPartie();
         while (partieEnCours) {
             for (Joueur joueur : liste_joueurs) {
+                if (joueur.getMain().getNombreCartes() == 0){
+                    System.out.println("Plus de carte en main : égalité (Bravo i guess)");
+                    partieEnCours = false;
+                    break;
+                }
                 faireTourJoueur(joueur);
                 Joueur gagnant = verifierConditionVictoire();
                 if (gagnant != null) {
@@ -92,11 +97,16 @@ public class GestionPartie {
                     continuer = false;
                 }
                 else{
-                    if (liste_bornes.get(answer-1).revendiquer(joueurReel)){
+                    if (liste_bornes.get(answer).revendiquer(joueurReel)){
                         view.afficherCaptureBorne(joueurReel, answer);
                     }
                     else{
                         System.out.println("echec de la revendication");
+                        try {
+                            Thread.sleep(1000); // Pause finale pour que le message reste un instant
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
                     }
 
                 }

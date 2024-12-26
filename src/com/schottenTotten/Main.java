@@ -45,12 +45,14 @@ public class Main {
 
             // Étape 3 : Initialiser les joueurs et les composants du jeu
             List<Joueur> joueurs = new ArrayList<>();
-            //joueurs.add(joueur1);
-            //joueurs.add(joueur2);
             List<Borne> listeBornes = new ArrayList<>();
             // Supposons que vous avez déjà récupéré les pseudos des joueurs
 
             Pioche pioche = new Pioche();
+            
+            if (variante != 0){
+                Pioche pioche_tactique = new Pioche();
+            }
 
 
             switch (modeDeJeu) {

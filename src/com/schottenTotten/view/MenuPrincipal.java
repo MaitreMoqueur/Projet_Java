@@ -154,7 +154,8 @@ public class MenuPrincipal {
         System.out.println("Choisissez la variante :");
         System.out.println("1. Classique");
         System.out.println("2. Tactique");
-        variante = demanderEntree(scanner, 1, 2);
+        System.out.println("3. Expert");
+        variante = demanderEntree(scanner, 1, 3);
         ConsoleView.nettoyerConsole();
 
         settingsChoisis = true; // Les paramètres sont configurés

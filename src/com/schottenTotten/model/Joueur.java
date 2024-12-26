@@ -2,6 +2,7 @@ package com.schottenTotten.model;
 
 import com.schottenTotten.model.Borne;
 import com.schottenTotten.model.Carte;
+import com.schottenTotten.model.CarteTactique;
 import java.util.List;
 import java.util.Arrays;
 
@@ -10,9 +11,11 @@ public class Joueur {
     protected int score = 0;
     protected Hand main;
     protected List<Integer> bornes_gagnees ;
+    protected int carte_tactique_jouée ;
 
     public Joueur(String pseudo, Pioche pioche) {
         this.pseudo = pseudo;
+        this.carte_tactique_jouée = 0;
         this.main = new Hand(pioche);
 
         for (int i = 0; i < 6; i++) {
@@ -52,7 +55,14 @@ public class Joueur {
 
     public Carte jouerCarte(int position_carte, Borne Borne) {
         this.main.nombre_cartes--;
-        Borne.ajouterCarte(this, this.getMain().getCarte(position_carte));
+        Carte carte_a_jouer = this.getMain().getCarte(position_carte);
+        //if (carte_a_jouer instanceof CarteTactique) {
+        //    this.carte_tactique_jouée ++;
+        //    carte_a_jouer.appliquerEffet(this, Borne);
+        //}
+        //else {
+            Borne.ajouterCarte(this,carte_a_jouer);
+        //}
         return this.main.cartes.remove(position_carte);
     }
 

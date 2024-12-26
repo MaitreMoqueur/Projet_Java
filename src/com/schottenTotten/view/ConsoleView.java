@@ -21,7 +21,7 @@ public class ConsoleView {
 
         for (int i = 0; i < bornes.size(); i++) {
             List<Carte> cartesBorne = bornes.get(i).getList(joueurs.get(0));
-            System.out.println("Borne " + (i + 1) + " - Cartes de " + joueurs.get(0).getPseudo() + ":");
+            System.out.println("Borne " + (i) + " - Cartes de " + joueurs.get(0).getPseudo() + ":");
             
             for (Carte carte : cartesBorne) {
                 System.out.println("    " + carte.getNumero() + " " + carte.getCouleur());
@@ -30,7 +30,7 @@ public class ConsoleView {
         System.out.println("____________________");
         for (int i = 0; i < bornes.size(); i++) {
             List<Carte> cartesBorne = bornes.get(i).getList(joueurs.get(1));
-            System.out.println("Borne " + (i + 1) + " - Cartes de " + joueurs.get(1).getPseudo() + ":");
+            System.out.println("Borne " + (i) + " - Cartes de " + joueurs.get(1).getPseudo() + ":");
             
             for (Carte carte : cartesBorne) {
                 System.out.println("    " + carte.getNumero() + " " + carte.getCouleur());
