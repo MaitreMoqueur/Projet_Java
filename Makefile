@@ -53,7 +53,7 @@ $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
 
 $(BIN_DIR)/test/%.class: $(TEST_DIR)/%.java
 	@$(MKDIR) $(dir $@)
-	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR):$(TEST_DIR) -cp $(LIB_DIR)/junit-jupiter-api-5.11.4.jar:$(LIB_DIR)/junit-jupiter-engine-5.11.4.jar $<
+	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR):$(TEST_DIR) -cp ./junit-jupiter-api-5.11.4.jar:./junit-jupiter-engine-5.11.4.jar $<
 
 run: all
 	java -cp bin com.schottenTotten.Main
