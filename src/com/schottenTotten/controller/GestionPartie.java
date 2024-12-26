@@ -1,5 +1,6 @@
 package com.schottenTotten.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.schottenTotten.model.*;
@@ -51,14 +52,16 @@ public class GestionPartie {
         view.afficherIATour(joueurIA);
         
         // IA joue une carte sur une borne
-        List<Integer> resultat = joueurIA.jouerCarteIA(liste_bornes);
+        List<Integer> bornesjouable = getlistbornesjouable(liste_bornes, joueurIA);
+        List<Integer> resultat = joueurIA.jouerCarteIA(liste_bornes, bornesjouable);
         int indexCarte = resultat.get(0);
         Carte carte = joueurIA.getMain().getCarte(indexCarte);
         int indexBorne = resultat.get(1);
         view.afficherCarteJoueeSurBorne(carte, indexBorne);
 
         //IA essaye de revendiquer des bornes
-        List<Integer> bornesCapturees = joueurIA.revendiquerBorneIA(liste_bornes);
+        List<Integer> bornesRevendicables = getlistbornesrevendicabme(liste_bornes);
+        List<Integer> bornesCapturees = joueurIA.revendiquerBorneIA(liste_bornes, bornesRevendicables);
         view.afficherBornesCaptureesParIA(bornesCapturees);
 
         // Fin du tour IA
@@ -74,32 +77,67 @@ public class GestionPartie {
         view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
         int indexCarte = InputHandler.demanderEntree( 1, joueurReel.getMain().getNombreCartes())-1;
         System.out.println("Sur quelle Borne ?");
-        int indexBorne = InputHandler.demanderEntree( 1, 10)-1;
+        List<Integer> bornesjouable = getlistbornesjouable(liste_bornes, joueurReel);
+        int indexBorne = InputHandler.inputinlist(bornesjouable);
         joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
 
 
         boolean continuer = true;
         while (continuer) {
+            List<Integer> bornesRevendicables = getlistbornesrevendicabme(liste_bornes);
             view.afficherEtatTour(numeroTour, joueurReel,liste_joueurs, liste_bornes);
-            view.afficherdemanderevendiquerborne();
-            //FIX MOI
-            int resultat = InputHandler.demanderSiRevendication();
-            if (resultat != -1) {
-                Borne borne = liste_bornes.get(resultat);
-                boolean reussite = borne.revendiquer(joueurReel);
-                //view.revendiquerBorne(joueurReel, borne);
-            } else {
-                continuer = false;                                      
+            if (bornesRevendicables.size() > 0){
+                view.afficherdemanderevendiquerborne(bornesRevendicables);
+                int answer = InputHandler.inputinlist(bornesRevendicables);
+                if (answer == 0){
+                    continuer = false;
+                }
+                else{
+                    if (liste_bornes.get(answer-1).revendiquer(joueurReel)){
+                        view.afficherCaptureBorne(joueurReel, answer);
+                    }
+                    else{
+                        System.out.println("echec de la revendication");
+                    }
+
+                }
+            }
+            else {
+                System.out.println("Pas de Borne revendicable");
+                continuer = false;
             }
         }
 
         // Joueur pioche une carte
         joueurReel.getMain().piocherCarte();
-        
+        try {
+            Thread.sleep(1000); // Pause finale pour que le message reste un instant
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         // Fin du tour
         view.afficherFinTour(joueurReel);
     }
-
+    private List<Integer> getlistbornesrevendicabme(List<Borne> listeBornes) {
+        List<Integer> bornesRevendicables = new ArrayList<>();
+        for (Borne borne : listeBornes) {
+            if (borne.getEtat() == Borne.Etat.LIBRE && 
+                borne.getList(liste_joueurs.get(0)).size() == 3 && 
+                borne.getList(liste_joueurs.get(1)).size() == 3) {
+                bornesRevendicables.add(borne.id_borne);
+            }
+        }
+        return bornesRevendicables;
+    }
+    private List<Integer> getlistbornesjouable(List<Borne> listeBornes, Joueur joueur) {
+        List<Integer> bornesjouable = new ArrayList<>();
+        for (Borne borne : listeBornes) {
+            if (borne.getEtat() == Borne.Etat.LIBRE && borne.getList(joueur).size() < 3){
+                bornesjouable.add(borne.id_borne);
+            }
+        }
+        return bornesjouable;
+    }
 
     private void annoncerFinPartie() {
         //view.afficherEcranVictoire();

@@ -147,7 +147,6 @@ public class Borne {
             }
         } 
         else {
-            System.out.println("Les conditions ne sont pas remplies pour revendiquer cette borne.");
             return false;
         }
     }

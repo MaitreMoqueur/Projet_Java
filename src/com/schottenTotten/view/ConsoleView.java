@@ -52,15 +52,15 @@ public class ConsoleView {
     }
 
     //FIX
-    public void afficherdemanderevendiquerborne(){
+    public void afficherdemanderevendiquerborne(List<Integer> listeBornesrevendicable){
         System.out.println("=====================");
         System.out.print("Shouaitez vous revendiquer une bornes ? ");
         System.out.println("Liste des bornes revendicables :");
-        //for (int index : bornesRevendicables) {
-        //    System.out.println(index + 1 + ". Borne " + (index + 1));
-        //}
+        for (int borne : listeBornesrevendicable) {
+                System.out.println(" ," + borne);
         System.out.println("0. Non");
         System.out.print("Votre choix : ");       
+        }
     }
 
     public void afficherCarteJoueeSurBorne(Carte carte, int borneIndex) {

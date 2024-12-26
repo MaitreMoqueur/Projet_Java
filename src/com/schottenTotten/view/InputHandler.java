@@ -28,26 +28,23 @@ public class InputHandler {
         return valeur;
     }
 //FIX mOI
-    public static int demanderSiRevendication(){
+    public static int inputinlist(List<Integer> list){
         boolean reponse_valide = false;
         int valeur = -1;
 
         while(!reponse_valide){
-            switch (recupererEntierUtilisateur()) {
-                case 0: // OUI
-                    reponse_valide = true;
-                    valeur = 1;
-                    break;
-                case 1: // NON
-                    reponse_valide = true;
-                    valeur = 0;
-                    break;
-                default: // Erreur
-                    System.out.println("❌ Erreur : Veuillez entrer une reponse valide.");
-                    break;
+            int input = recupererEntierUtilisateur();
+            if (input == 0) { // NON
+                reponse_valide = true;
+                valeur = 0; // 0 indique qu'aucune borne n'est revendiquée
+            } else if (list.contains(input)) { // Vérifie si la borne est dans la liste
+                reponse_valide = true;
+                valeur = input; // Renvoie la borne choisie
+            } else { // Erreur
+                System.out.println("❌ Erreur : La borne choisie n'est pas valide. Veuillez réessayer.");
             }
         }
-        return 1;
+       return valeur;
     }
 
     

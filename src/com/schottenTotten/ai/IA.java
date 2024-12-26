@@ -21,48 +21,50 @@ public class IA extends Joueur {
     }
 
     // Méthode pour jouer une carte en fonction de la difficulté
-    public List<Integer> jouerCarteIA(List<Borne> bornes) {
+    public List<Integer> jouerCarteIA(List<Borne> bornes, List<Integer> bornesjouable) {
         if (this.main.getNombreCartes() == 0) {
             throw new IllegalStateException("Aucune carte en main.");
         }
     
         switch (difficulte) {
             case 0:
-                return jouerTourFacile(bornes);
+                return jouerTourFacile(bornes, bornesjouable);
             case 1:
-                return jouerTourMoyen(bornes);
+                return jouerTourMoyen(bornes, bornesjouable);
             case 2:
-                return jouerTourDifficile(bornes);
+                return jouerTourDifficile(bornes, bornesjouable);
             default:
                 throw new IllegalStateException("Niveau de difficulté inconnu : " + difficulte);
         }
     }
 
-    private List<Integer> jouerTourFacile(List<Borne> bornes) {
+    private List<Integer> jouerTourFacile(List<Borne> bornes, List<Integer> bornesjouable) {
         Random random = new Random();
         int positionCarte = random.nextInt(this.main.getNombreCartes());
-        int positionBorne = random.nextInt(bornes.size());
+        int positionBorneDansJouable = random.nextInt(bornesjouable.size());
+        int positionBorne = bornesjouable.get(positionBorneDansJouable);
+        bornes.get(positionBorne).ajouterCarte(this, this.getMain().getCarte(positionCarte));
         return List.of(positionCarte, positionBorne);
     }
     
-    private List<Integer> jouerTourMoyen(List<Borne> bornes) {
+    private List<Integer> jouerTourMoyen(List<Borne> bornes, List<Integer> bornesjouable) {
         // Logique pour niveau moyen à implémenter
         // Exemple : stratégie semi-aléatoire avec évaluation simplifiée des bornes
         // return List.of(positionCarte, positionBorne);
         throw new UnsupportedOperationException("Niveau moyen non encore implémenté.");
     }
     
-    private List<Integer> jouerTourDifficile(List<Borne> bornes) {
+    private List<Integer> jouerTourDifficile(List<Borne> bornes, List<Integer> bornesjouable) {
         // Logique pour niveau difficile à implémenter
         // Exemple : stratégie avancée en fonction de l'état des bornes
         // return List.of(positionCarte, positionBorne);
         throw new UnsupportedOperationException("Niveau difficile non encore implémenté.");
     }   
 
-    public List<Integer> revendiquerBorneIA(List<Borne> listeBornes) {
+    public List<Integer> revendiquerBorneIA(List<Borne> listeBornes, List<Integer> listeBornesRevdndicable) {
         List<Integer> bornesCapturees = new ArrayList<>();
     
-        for (int i = 0; i < listeBornes.size(); i++) {
+        for (int i : listeBornesRevdndicable) {
             Borne borne = listeBornes.get(i);
     
             // Tente de revendiquer la borne
