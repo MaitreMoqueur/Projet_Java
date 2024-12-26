@@ -84,8 +84,8 @@ public class Main {
             gestionPartie.demarrerPartie();
 
             // Étape 5 : Gestion du menu de fin de partie
-        //    view.afficherMenuFin();
-            int choix = InputHandler.recupererEntierUtilisateur();
+            ConsoleView.afficherMenuFin();
+            int choix = InputHandler.demanderEntree(0, 2);
 
             switch (choix) {
                 case 0: // Relance rapide
@@ -103,6 +103,6 @@ public class Main {
             }
         }
 
-        //view.afficherFermetureJeu();
+        ConsoleView.afficherfermeturejeu();
     }
 }

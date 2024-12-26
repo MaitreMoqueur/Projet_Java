@@ -131,18 +131,18 @@ public class ConsoleView {
         }
     }
 
-    public void afficherEcranVictoire(List<Joueur> joueurs, Joueur joueurActuel, Joueur vainqueur, int variante) {
+    public void afficherEcranVictoire(Joueur vainqueur, Joueur perdant, int variante) {
         nettoyerConsole(); // Nettoie l'affichage précédent
 
         switch (variante) {
             case 1: // Variante 1 : Vous avez gagné
-                afficherVictoireJoueur(joueurActuel);
+                afficherVictoireJoueur(vainqueur);
                 break;
             case 2: // Variante 2 : Vous avez perdu
-                afficherDefaiteJoueur(joueurActuel, vainqueur);
+                afficherDefaiteJoueur(vainqueur, perdant);
                 break;
             case 3: // Variante 3 : Joueur X a gagné
-                afficherVictoireAutre(vainqueur, joueurs);
+                afficherVictoireAutre(vainqueur, perdant);
                 break;
             default:
                 System.out.println("Variante inconnue. Aucun affichage de victoire.");
@@ -157,24 +157,23 @@ public class ConsoleView {
         System.out.println("==================================");
     }
 
-    private void afficherDefaiteJoueur(Joueur joueurActuel, Joueur vainqueur) {
+    private void afficherDefaiteJoueur(Joueur vainqueur, Joueur perdant) {
         System.out.println("==================================");
         System.out.println("😢 Vous avez perdu...");
         System.out.println("Le joueur " + vainqueur.getPseudo() + " remporte la victoire avec " + vainqueur.getScore() + " points.");
-        System.out.println("Votre score : " + joueurActuel.getScore() + " points.");
+        System.out.println("Votre score : " + perdant.getScore() + " points.");
         System.out.println("==================================");
     }
 
-    private void afficherVictoireAutre(Joueur vainqueur, List<Joueur> joueurs) {
+    private void afficherVictoireAutre(Joueur vainqueur, Joueur perdant) {
         System.out.println("==================================");
         System.out.println("🏆 VICTOIRE 🏆");
         System.out.println("🎖️ Le joueur " + vainqueur.getPseudo() + " a gagné avec " + vainqueur.getScore() + " points !");
         System.out.println("==================================");
 
         System.out.println("\nRésumé des scores :");
-        for (Joueur joueur : joueurs) {
-            System.out.println(joueur.getPseudo() + " : " + joueur.getScore() + " points");
-        }
+        System.out.println(perdant.getPseudo() + " : " + perdant.getScore() + " points");
+
         System.out.println("\nMerci d'avoir joué !");
     }
 
@@ -185,19 +184,16 @@ public class ConsoleView {
         nettoyerConsole(); // Nettoie l'affichage précédent
 
         // Étape 1 : Préparation de la partie
-        afficherMessageAvecPause("🔧 Préparation de la partie...", 1000);
+        afficherMessageAvecPause("🔧 Préparation de la partie...", 800);
 
         // Étape 2 : Placement des bornes
-        afficherMessageAvecPause("📍 Placement des bornes...", 1000);
+        afficherMessageAvecPause("📍 Placement des bornes...", 800);
 
         // Étape 3 : Création de la pioche
-        afficherMessageAvecPause("🎴 Création de la pioche...", 1000);
+        afficherMessageAvecPause("🎴 Création de la pioche...", 800);
 
         // Étape 4 : Distribution des cartes
-        afficherMessageAvecPause("🃏 Distribution des cartes...", 1000);
-
-        // Étape 5 : Affûtage des épées
-        afficherMessageAvecPause("⚔️ Affûtage des épées...", 1000);
+        afficherMessageAvecPause("🃏 Distribution des cartes...", 800);
 
         // Message final
         nettoyerConsole();
@@ -205,7 +201,7 @@ public class ConsoleView {
         System.out.println("🎮 La partie va commencer !");
         System.out.println("===========================");
         try {
-            Thread.sleep(1500); // Pause finale pour que le message reste un instant
+            Thread.sleep(1000); // Pause finale pour que le message reste un instant
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -238,7 +234,7 @@ public class ConsoleView {
         System.out.println("🎮 C'est au tour de : " + joueur.getPseudo());
         System.out.println("===========================");
         try {
-            Thread.sleep(2000); // Pause pour laisser le joueur lire le message
+            Thread.sleep(1000); // Pause pour laisser le joueur lire le message
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -279,11 +275,17 @@ public class ConsoleView {
         System.out.println("===========================");
     }
 
-    public void afficherfermeturejeu() {
+    public static void afficherfermeturejeu() {
         System.out.println("===========================");
         System.out.println("Merci d'avoir joué & à bientot ! ");
         System.out.println("===========================");
     }
 
-    
+    public static void afficherMenuFin() {
+        System.out.println("\n=== Fin de la Partie ===");
+        System.out.println("0. Relance rapide (rejouer avec les mêmes paramètres)");
+        System.out.println("1. Retour au menu principal");
+        System.out.println("2. Quitter le jeu");
+        System.out.print("Votre choix : ");
+    }
 }

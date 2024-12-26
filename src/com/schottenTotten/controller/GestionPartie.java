@@ -36,7 +36,6 @@ public class GestionPartie {
             }
             numeroTour++;
         }
-        annoncerFinPartie();
     }
 
     private void faireTourJoueur(Joueur joueur) {
@@ -73,7 +72,7 @@ public class GestionPartie {
         view.afficherJoueurDebutTour(joueurReel, numeroTour);
         view.afficherEtatTour(numeroTour, joueurReel, liste_joueurs, liste_bornes);
 
-        // Joueur Joue une carte 
+        // Joueur Joue une carte
         view.afficherquellecarteJouer();                                                                                                                                                                                                                                                                                                         
         int indexCarte = InputHandler.demanderEntree( 1, joueurReel.getMain().getNombreCartes())-1;
         System.out.println("Sur quelle Borne ?");
@@ -139,13 +138,6 @@ public class GestionPartie {
         return bornesjouable;
     }
 
-    private void annoncerFinPartie() {
-        //view.afficherEcranVictoire();
-        // relancer ?
-        // fermer jeu
-        // Menu 
-    }
-
     public Joueur verifierConditionVictoire() {
         int bornesCapturéesJ1 = 0;
         int bornesCapturéesJ2 = 0;
@@ -178,11 +170,11 @@ public class GestionPartie {
 
         // Vérifie les conditions de victoire
         if (bornesCapturéesJ1 >= 5 || maxBornesConsecutivesJ1 >= 3) {
-            view.afficherEcranVictoire(liste_joueurs, liste_joueurs.get(0), null, numeroTour);
+            view.afficherEcranVictoire(liste_joueurs.get(0), liste_joueurs.get(1), 3);
             return liste_joueurs.get(0);
         }
         if (bornesCapturéesJ2 >= 5 || maxBornesConsecutivesJ2 >= 3) {
-            view.afficherEcranVictoire(liste_joueurs, liste_joueurs.get(1), null, numeroTour);
+            view.afficherEcranVictoire(liste_joueurs.get(1), liste_joueurs.get(0), 3);
             return liste_joueurs.get(1);
         }
 

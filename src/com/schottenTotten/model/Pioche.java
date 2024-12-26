@@ -20,11 +20,13 @@ public class Pioche {
     }
 
     public Carte tirerCarte() {
-        if (getNombreDeCartes() == 0) {
-            throw new IllegalStateException("La pioche est vide !");
+        if (getNombreDeCartes() != 0) {
+            this.nombre_cartes--;
+            return cartes.remove(this.nombre_cartes);
         }
-        this.nombre_cartes--;
-        return cartes.remove(this.nombre_cartes);
+        else {
+            return null;
+        }
     }
 
     public int getNombreDeCartes() {
