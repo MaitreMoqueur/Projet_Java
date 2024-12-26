@@ -65,9 +65,15 @@ public class ConsoleView {
 
     public void afficherCarteJoueeSurBorne(Carte carte, int borneIndex) {
         nettoyerConsole();
+        
         System.out.println("=================");
-        System.out.println("Carte " + carte + " jouée sur Borne " + (borneIndex + 1));
+        System.out.println("Carte " + carte.getNumero() + " " + carte.getCouleur() + " jouée sur Borne " + (borneIndex + 1));
         System.out.println("=================");
+        try {
+            Thread.sleep(1500); // Pause finale pour que le message reste un instant
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public void afficherCaptureBorne(Joueur joueur, int borneIndex) {
@@ -75,6 +81,11 @@ public class ConsoleView {
         System.out.println("===========================");
         System.out.println("🎉 Borne " + (borneIndex + 1) + " capturée par " + joueur.getPseudo() + " ! 🎉");
         System.out.println("===========================");
+        try {
+            Thread.sleep(1500); // Pause finale pour que le message reste un instant
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public void afficherFinTour(Joueur joueur) {
@@ -83,6 +94,11 @@ public class ConsoleView {
         System.out.println("🕒 Le tour de " + joueur.getPseudo() + " est terminé.");
         System.out.println("Préparation du tour suivant...");
         System.out.println("===========================");
+        try {
+            Thread.sleep(1500); // Pause finale pour que le message reste un instant
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public void afficherIATour(Joueur ia) {
@@ -91,6 +107,11 @@ public class ConsoleView {
         System.out.println("🤖 " + ia.getPseudo() + " est en train de jouer...");
         System.out.println("Veuillez patienter.");
         System.out.println("===========================");
+        try {
+            Thread.sleep(1500); // Pause finale pour que le message reste un instant
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
     }
 
@@ -103,6 +124,11 @@ public class ConsoleView {
             System.out.println("🤖 " + ia.getPseudo() + " a tenté de revendiquer la Borne " + (borneIndex + 1) + ", mais a échoué.");
         }
         System.out.println("===========================");
+        try {
+            Thread.sleep(1500); // Pause finale pour que le message reste un instant
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public void afficherEcranVictoire(List<Joueur> joueurs, Joueur joueurActuel, Joueur vainqueur, int variante) {
