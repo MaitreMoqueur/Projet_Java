@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import com.schottenTotten.model.*;
+import java.util.Comparator;
+
 
 // La classe IA hérite de Joueur
 public class IA extends Joueur {
     private int difficulte; // 0 = Facile, 1 = Moyen, 2 = Difficile
+    private int borneCible = new Random().nextInt(9); // Attribut pour IA Moyen
 
     // Constructeur IA
     public IA(int difficulte, String nom, Pioche pioche) {
@@ -43,15 +46,36 @@ public class IA extends Joueur {
         int positionCarte = random.nextInt(this.main.getNombreCartes());
         int positionBorneDansJouable = random.nextInt(bornesjouable.size());
         int positionBorne = bornesjouable.get(positionBorneDansJouable);
-        jouerCarte(positionCarte, bornes.get(positionBorne));
         return List.of(positionCarte, positionBorne);
     }
     
     private List<Integer> jouerTourMoyen(List<Borne> bornes, List<Integer> bornesjouable) {
-        // Logique pour niveau moyen à implémenter
-        // Exemple : stratégie semi-aléatoire avec évaluation simplifiée des bornes
-        // return List.of(positionCarte, positionBorne);
-        throw new UnsupportedOperationException("Niveau moyen non encore implémenté.");
+        // Déterminer la carte
+        Carte cartePlusForte = this.main.getCartes().stream().max(Comparator.comparingInt(Carte::getNumero)).orElse(new Carte(0, "aucune"));;
+
+        // Déterminer la borne
+        if (!bornesjouable.contains(this.borneCible)) {
+            int borneAdjacenteGauche = this.borneCible - 1;
+            int borneAdjacenteDroite = this.borneCible + 1;
+
+            if (borneAdjacenteGauche >= 0 && bornesjouable.contains(borneAdjacenteGauche)) {
+                this.borneCible = borneAdjacenteGauche; // Choisir la borne de gauche si elle est valide
+            } else if (borneAdjacenteDroite < 9 && bornesjouable.contains(borneAdjacenteDroite)) {
+                this.borneCible = borneAdjacenteDroite; // Choisir la borne de droite si elle est valide
+            } else if (borneAdjacenteGauche < 0) {
+                while (!bornesjouable.contains(this.borneCible)) {
+                    this.borneCible++;
+                }
+            } else {
+                while (!bornesjouable.contains(this.borneCible)) {
+                    this.borneCible--;
+                }
+            }
+        }
+
+        // Jouer la carte
+        int positionCarte = this.main.getCartes().indexOf(cartePlusForte);
+        return List.of(positionCarte, this.borneCible);
     }
     
     private List<Integer> jouerTourDifficile(List<Borne> bornes, List<Integer> bornesjouable) {
