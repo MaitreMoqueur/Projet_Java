@@ -163,6 +163,7 @@ public class GestionPartie {
             if (joueurReel.getMain().getCarte(indexCarte) instanceof CarteTactique) {
                 if (joueurReel.getCarteTactiquePlayed() < joueurAdverse.getCarteTactiquePlayed() + 1){
                     joueurReel.incrementerCarteTactiquePlayed(); 
+                   // joueurReel.getMain().getCarte(indexCarte).appliquerEffet(joueurReel, liste_bornes.get(indexBorne), false, pioche, piocheTactique);
                     joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
                 }
                 else {

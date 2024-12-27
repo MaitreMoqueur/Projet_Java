@@ -33,7 +33,7 @@ public class CarteTactique extends Carte {
         return "Carte Tactique: " + type + " [" + super.toString() + "]";
     }
 
-    public Carte appliquerEffet(Joueur joueur, Borne borne, boolean activation, Pioche pioche) {
+    public Carte appliquerEffet(Joueur joueur, Borne borne, boolean activation, Pioche pioche, Pioche pioche_tactique) {
         switch (type) {
             case JOKER:
                 if (activation) {
