@@ -64,9 +64,7 @@ clean:
 code:
 	$(CODE) $(SRC_FILES)
 
-compil_tests: $(TEST_CLASS_FILES)
-
-tests: compil_tests
+tests: $(TEST_CLASS_FILES)
 	$(JAVA) -cp $(BIN_DIR):./junit-platform-console-standalone-1.11.4.jar \
 		org.junit.platform.console.ConsoleLauncher --scan-classpath
 
