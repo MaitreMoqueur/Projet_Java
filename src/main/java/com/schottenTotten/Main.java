@@ -20,6 +20,8 @@ public class Main {
         int difficulteIA1 = -1;
         int difficulteIA2 = -1;
         Variante variante = null; // Utilisation de l'énumération Variante
+        String pseudoJ1 = "";
+        String pseudoJ2 = "";
 
         while (continuerProgramme) {
             if (!relanceRapide) {
@@ -34,6 +36,8 @@ public class Main {
                 difficulteIA1 = menu.getDifficulteIA();
                 difficulteIA2 = menu.getDifficulteIA2();
                 variante = menu.getVariante(); // Retourne un Variante
+                pseudoJ1 = menu.getPseudoJ1();
+                pseudoJ2 = menu.getPseudoJ2();
             }
 
             // Étape 3 : Initialiser les joueurs et les composants du jeu
@@ -48,24 +52,21 @@ public class Main {
 
             switch (modeDeJeu) {
                 case 1: // Spectateur (IA vs IA)
-                    joueurs.add(new IA(difficulteIA1, "IA1", pioche));
-                    joueurs.add(new IA(difficulteIA2, "IA2", pioche));
+                    joueurs.add(new IA(difficulteIA1, pseudoJ1, pioche));
+                    joueurs.add(new IA(difficulteIA2, pseudoJ2, pioche));
                     break;
                 case 2: // Joueur vs IA
-                    joueurs.add(new Joueur("Joueur", pioche));
-                    joueurs.add(new IA(difficulteIA1, "IA", pioche));
+                    joueurs.add(new Joueur(pseudoJ1, pioche));
+                    joueurs.add(new IA(difficulteIA1, pseudoJ2, pioche));
                     break;
                 case 3: // Joueur vs Joueur
-                    joueurs.add(new Joueur("Joueur 1", pioche));
-                    joueurs.add(new Joueur("Joueur 2", pioche));
+                    joueurs.add(new Joueur(pseudoJ1, pioche));
+                    joueurs.add(new Joueur(pseudoJ2, pioche));
                     break;
                 default:
                     System.out.println("Mode de jeu invalide !");
                     return;
             }
-
-            String pseudoJ1 = joueurs.get(0).getPseudo();
-            String pseudoJ2 = joueurs.get(1).getPseudo();
 
             for (int i = 0; i < 9; i++) { // Créez les 9 bornes nécessaires
                 listeBornes.add(new Borne(pseudoJ1, pseudoJ2, i));

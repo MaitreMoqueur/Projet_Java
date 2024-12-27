@@ -12,6 +12,8 @@ public class MenuPrincipal {
     private int difficulteIA;    // 1 = Facile, 2 = Moyen, 3 = Difficile
     private int difficulteIA2;   // Difficulté de la deuxième IA, utilisée uniquement pour le mode Spectateur
     private Variante variante;        // 1 = Classique, 2 = Tactique
+    private String pseudoJ1;
+    private String pseudoJ2;
     Scanner scanner = new Scanner(System.in);
     
     public MenuPrincipal() {
@@ -19,6 +21,9 @@ public class MenuPrincipal {
         this.modeDeJeu = -1;          
         this.difficulteIA = -1;       
         this.variante = Variante.CLASSIQUE;
+        this.pseudoJ1 = "";
+        this.pseudoJ2 = "";
+
     }
 
     public boolean gererMenu() {
@@ -129,23 +134,20 @@ public class MenuPrincipal {
             System.out.println("Choisissez la difficulté de la première IA :");
             System.out.println("1. Facile (aléatoire)");
             System.out.println("2. Moyen (début de réflexion)");
-            System.out.println("3. Difficile (réflexion avancée)");
-            difficulteIA = demanderEntree(scanner, 1, 3);
+            difficulteIA = demanderEntree(scanner, 1, 2);
             ConsoleView.nettoyerConsole();
 
             System.out.println("Choisissez la difficulté de la deuxième IA :");
             System.out.println("1. Facile (aléatoire)");
             System.out.println("2. Moyen (début de réflexion)");
-            System.out.println("3. Difficile (réflexion avancée)");
-            difficulteIA2 = demanderEntree(scanner, 1, 3);
+            difficulteIA2 = demanderEntree(scanner, 1, 2);
             ConsoleView.nettoyerConsole();
 
         } else if (modeDeJeu == 2) {
             System.out.println("Choisissez la difficulté de l'IA :");
             System.out.println("1. Facile (aléatoire)");
             System.out.println("2. Moyen (début de réflexion)");
-            System.out.println("3. Difficile (réflexion avancée)");
-            difficulteIA = demanderEntree(scanner, 1, 3);
+            difficulteIA = demanderEntree(scanner, 1, 2);
             difficulteIA2 = -1; // Pas de deuxième IA
             ConsoleView.nettoyerConsole();
         } else {
@@ -172,6 +174,10 @@ public class MenuPrincipal {
         }
         ConsoleView.nettoyerConsole();
 
+        // Choix des pseudos 
+        pseudoJ1 = demanderPseudo(scanner, "Joueur 1");
+        pseudoJ2 = demanderPseudo(scanner, "Joueur 2");
+
         settingsChoisis = true; // Les paramètres sont configurés
         System.out.println("Les paramètres du jeu ont été configurés avec succès !");
         try {
@@ -197,6 +203,24 @@ public class MenuPrincipal {
         } while (choix < min || choix > max);
         return choix;
     }
+    
+    public static String demanderPseudo(Scanner scanner, String nomJoueur) {
+        String pseudo;
+        boolean entreeValide = false;
+
+        do {
+            System.out.println("Choisissez le pseudo de " + nomJoueur + " : ");
+            pseudo = scanner.nextLine().trim();
+
+            if (pseudo.isEmpty()) {
+                System.out.println("❌ Erreur : Le pseudo ne peut pas être vide. Veuillez réessayer.");
+            } else {
+                entreeValide = true;
+            }
+        } while (!entreeValide);
+
+        return pseudo;
+    }
 
     public int getModeDeJeu() {
         return modeDeJeu;
@@ -212,5 +236,11 @@ public class MenuPrincipal {
 
     public int getDifficulteIA2() {
         return difficulteIA2;
+    }
+    public String getPseudoJ1() {
+        return pseudoJ1;
+    }
+    public String getPseudoJ2() {
+        return pseudoJ2;
     }
 }
