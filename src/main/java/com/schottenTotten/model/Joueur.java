@@ -2,6 +2,7 @@ package main.java.com.schottenTotten.model;
 
 import java.util.List;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Joueur {
     protected String pseudo;
@@ -16,6 +17,7 @@ public class Joueur {
         this.CarteTactiqueplayed  = 0;
         this.main = new Hand(pioche);
         this.jokerPlayed = false;
+        this.bornes_gagnees = new ArrayList<>();
     }
 
     public int getCarteTactiquePlayed() {
@@ -54,17 +56,18 @@ public class Joueur {
         this.jokerPlayed = jokerPlayed;
     }
 
-
-
     public boolean revendiquerBorne(Borne borne, Joueur joueur) {
         boolean gagnee = borne.revendiquer(joueur);
         if (gagnee == true) {
-            bornes_gagnees.add(borne.id_borne);
+            this.bornes_gagnees.add(borne.id_borne);
         }
         return gagnee;
     }
 
     public Carte jouerCarte(int position_carte, Borne Borne) {
+        if (this.main.getNombreCartes() == 0) {
+            throw new IllegalStateException("Aucune carte en main.");
+        }
         this.main.nombre_cartes--;
         return this.main.cartes.remove(position_carte);
     }

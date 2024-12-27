@@ -15,8 +15,6 @@ SRC_FILES = \
 	$(MODEL_DIR)/Borne.java \
         $(MODEL_DIR)/Hand.java \
 	$(MODEL_DIR)/Pioche.java \
-	$(MODEL_DIR)/Variante.java \
-	$(MODEL_DIR)/CarteTactique.java \
 	$(CONTROLLER_DIR)/GestionPartie.java \
 	$(VIEW_DIR)/ConsoleView.java \
 	$(VIEW_DIR)/MenuPrincipal.java \
@@ -55,7 +53,7 @@ $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
 
 $(BIN_DIR)/test/%.class: $(TEST_DIR)/%.java
 	@$(MKDIR) $(dir $@)
-	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR):$(TEST_DIR) -cp ./junit-jupiter-api-5.11.4.jar:./junit-jupiter-engine-5.11.4.jar $<
+	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR):$(TEST_DIR) -cp ./junit-jupiter-api-5.11.4.jar:./junit-jupiter-engine-5.11.4.jar:./apiguardian-api-1.1.2.jar:./junit-platform-commons-1.11.4.jar:./opentest4j-1.3.0.jar:./junit-platform-console-standalone-1.11.4.jar:./mockito-core-5.14.2.jar $<
 
 run: all
 	java -cp bin com.schottenTotten.Main

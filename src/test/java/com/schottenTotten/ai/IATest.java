@@ -26,13 +26,9 @@ public class IATest {
         iaMoyen = new IA(2, "IA Moyen", pioche);
         iaDifficile = new IA(3, "IA Difficile", pioche);
 
-        iaFacile.remplirMain();
-        iaMoyen.remplirMain();
-        iaDifficile.remplirMain();
-
         bornes = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            bornes.add(new Borne("Joueur1", "Joueur2", i));
+            bornes.add(new Borne("IA Facile", "IA Moyen", i));
         }
 
         bornesJouables = new ArrayList<>();
@@ -81,14 +77,20 @@ public class IATest {
         borneRevendicable.ajouterCarte(iaFacile, new Carte(6, "Rouge"));
         borneRevendicable.ajouterCarte(iaFacile, new Carte(7, "Rouge"));
 
+        //On prend par exemple iaMoyen comme adversaire pour pouvoir revendiquer une borne
+        borneRevendicable.ajouterCarte(iaMoyen, new Carte(1, "Rouge"));
+        borneRevendicable.ajouterCarte(iaMoyen, new Carte(2, "Vert"));
+        borneRevendicable.ajouterCarte(iaMoyen, new Carte(3, "Bleu"));
+
         bornesRevendicables.add(0);
 
         List<Integer> bornesCapturees = iaFacile.revendiquerBorneIA(bornes, bornesRevendicables);
 
-        assertEquals(1, bornesCapturees.size());
-        assertEquals(0, bornesCapturees.get(0));
-        assertEquals(Borne.Etat.CAPTUREE_J1, borneRevendicable.getEtat());
+        assertEquals(1, bornesCapturees.size(), "Une seule borne devrait être capturée.");
+        assertTrue(bornesCapturees.contains(0), "L'indice de la borne capturée devrait être 0.");
+        assertEquals(Borne.Etat.CAPTUREE_J1, borneRevendicable.getEtat(), "La borne revendiquée devrait être capturée par le joueur 1.");
     }
+
 
     @Test
     public void testJouerCarteIA_ExceptionQuandMainVide() {
