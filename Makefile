@@ -14,6 +14,8 @@ SRC_FILES = \
 	$(MODEL_DIR)/Borne.java \
         $(MODEL_DIR)/Hand.java \
 	$(MODEL_DIR)/Pioche.java \
+	$(MODEL_DIR)/Variante.java \
+	$(MODEL_DIR)/CarteTactique.java \
 	$(CONTROLLER_DIR)/GestionPartie.java \
 	$(VIEW_DIR)/ConsoleView.java \
 	$(VIEW_DIR)/MenuPrincipal.java \

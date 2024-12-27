@@ -8,14 +8,24 @@ public class Joueur {
     protected int score = 0;
     protected Hand main;
     protected List<Integer> bornes_gagnees ;
-    protected int carte_tactique_jouée ;
+    protected int CarteTactiqueplayed  ;
+    protected boolean jokerPlayed ;
 
     public Joueur(String pseudo, Pioche pioche) {
         this.pseudo = pseudo;
-        this.carte_tactique_jouée = 0;
+        this.CarteTactiqueplayed  = 0;
         this.main = new Hand(pioche);
+        this.jokerPlayed = false;
     }
 
+    public int getCarteTactiquePlayed() {
+        return this.CarteTactiqueplayed;
+    }
+    
+    public void incrementerCarteTactiquePlayed() {
+        this.CarteTactiqueplayed++;
+    }
+    
     public String getPseudo() {
         return this.pseudo;
     }
@@ -36,6 +46,14 @@ public class Joueur {
         this.score++;
     }
 
+    public boolean isJokerPlayed() {
+        return jokerPlayed;
+    }
+
+    public void setJokerPlayed(boolean jokerPlayed) {
+        this.jokerPlayed = jokerPlayed;
+    }
+
 
 
     public boolean revendiquerBorne(Borne borne, Joueur joueur) {
@@ -48,14 +66,6 @@ public class Joueur {
 
     public Carte jouerCarte(int position_carte, Borne Borne) {
         this.main.nombre_cartes--;
-        Carte carte_a_jouer = this.getMain().getCarte(position_carte);
-        //if (carte_a_jouer instanceof CarteTactique) {
-        //    this.carte_tactique_jouée ++;
-        //    carte_a_jouer.appliquerEffet(this, Borne);
-        //}
-        //else {
-            Borne.ajouterCarte(this,carte_a_jouer);
-        //}
         return this.main.cartes.remove(position_carte);
     }
 

@@ -1,6 +1,9 @@
 package main.java.com.schottenTotten.view;
 
 import java.util.Scanner;
+
+import main.java.com.schottenTotten.model.Variante;
+
 import java.util.List;
 
 public class MenuPrincipal {
@@ -8,14 +11,14 @@ public class MenuPrincipal {
     private int modeDeJeu;       // 1 = Spectateur, 2 = Joueur vs IA, 3 = Joueur vs Joueur
     private int difficulteIA;    // 1 = Facile, 2 = Moyen, 3 = Difficile
     private int difficulteIA2;   // Difficulté de la deuxième IA, utilisée uniquement pour le mode Spectateur
-    private int variante;        // 1 = Classique, 2 = Tactique
+    private Variante variante;        // 1 = Classique, 2 = Tactique
     Scanner scanner = new Scanner(System.in);
     
     public MenuPrincipal() {
         this.settingsChoisis = false; 
         this.modeDeJeu = -1;          
         this.difficulteIA = -1;       
-        this.variante = -1;
+        this.variante = Variante.CLASSIQUE;
     }
 
     public boolean gererMenu() {
@@ -155,7 +158,18 @@ public class MenuPrincipal {
         System.out.println("1. Classique");
         System.out.println("2. Tactique");
         System.out.println("3. Expert");
-        variante = demanderEntree(scanner, 1, 3);
+        int choix = demanderEntree(scanner, 1, 3);
+        switch (choix) {
+            case 1:
+                variante = Variante.CLASSIQUE;
+                break;
+            case 2:
+                variante = Variante.TACTIQUE;
+                break;
+            case 3:
+                variante = Variante.EXPERT;
+                break;
+        }
         ConsoleView.nettoyerConsole();
 
         settingsChoisis = true; // Les paramètres sont configurés
@@ -192,7 +206,7 @@ public class MenuPrincipal {
         return difficulteIA;
     }
 
-    public int getVariante() {
+    public Variante getVariante() {
         return variante;
     }
 

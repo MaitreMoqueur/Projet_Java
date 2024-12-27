@@ -5,9 +5,6 @@ import main.java.com.schottenTotten.model.*;
 import main.java.com.schottenTotten.ai.IA;
 import main.java.com.schottenTotten.view.*;
 
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +19,13 @@ public class Main {
         int modeDeJeu = -1;
         int difficulteIA1 = -1;
         int difficulteIA2 = -1;
-        int variante = -1;
-        //Joueur joueur1 = null;
-        //Joueur joueur2 = null;
+        Variante variante = null; // Utilisation de l'énumération Variante
 
         while (continuerProgramme) {
             if (!relanceRapide) {
                 // Étape 2 : Gérer le menu (configuration des paramètres du jeu)
                 if (!menu.gererMenu()) {
-          //          view.afficherFermetureJeu();
+                    ConsoleView.afficherfermeturejeu();
                     return; // Fin du programme si l'utilisateur quitte le menu
                 }
 
@@ -38,22 +33,18 @@ public class Main {
                 modeDeJeu = menu.getModeDeJeu();
                 difficulteIA1 = menu.getDifficulteIA();
                 difficulteIA2 = menu.getDifficulteIA2();
-                variante = menu.getVariante();
-                //joueur1 = menu.getJoueur1();
-                //joueur2 = menu.getJoueur2();
+                variante = menu.getVariante(); // Retourne un Variante
             }
 
             // Étape 3 : Initialiser les joueurs et les composants du jeu
             List<Joueur> joueurs = new ArrayList<>();
             List<Borne> listeBornes = new ArrayList<>();
-            // Supposons que vous avez déjà récupéré les pseudos des joueurs
-
             Pioche pioche = new Pioche();
-            
-            if (variante != 1){
-                Pioche pioche_tactique = new Pioche();
-            }
 
+            Pioche piocheTactique = null;
+            if (variante != Variante.CLASSIQUE) {
+                piocheTactique = new Pioche(true); // Pioche pour les cartes tactiques
+            }
 
             switch (modeDeJeu) {
                 case 1: // Spectateur (IA vs IA)
@@ -80,10 +71,9 @@ public class Main {
                 listeBornes.add(new Borne(pseudoJ1, pseudoJ2, i));
             }
 
-
             // Étape 4 : Lancer la gestion de la partie
-            GestionPartie gestionPartie = new GestionPartie(joueurs, listeBornes, view);
-            gestionPartie.demarrerPartie(pioche);
+            GestionPartie gestionPartie = new GestionPartie(joueurs, listeBornes, view, variante);
+            gestionPartie.demarrerPartie(pioche, piocheTactique);
 
             // Étape 5 : Gestion du menu de fin de partie
             ConsoleView.afficherMenuFin();

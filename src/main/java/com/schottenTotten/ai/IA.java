@@ -100,6 +100,27 @@ public class IA extends Joueur {
     
         return bornesCapturees; // Retourne la liste des indices des bornes capturées
     }
+
+    public boolean choixpioche() {// Retourne true pour la pioche classique, false pour la pioche tactique
+        switch (this.difficulte) {
+            case 0: // Niveau facile
+                return choixPiocheFacile();
+    
+            case 1: // Niveau moyen
+                return choixPiocheMoyen();
+
+            default:
+                throw new IllegalStateException("Niveau de difficulté inconnu : " + this.difficulte);
+        }
+    }
+    
+    private boolean choixPiocheFacile() {
+        return true; 
+    }
+    
+    private boolean choixPiocheMoyen() {
+        return true;
+    }
     
 
 }

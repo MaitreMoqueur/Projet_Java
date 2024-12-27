@@ -1,18 +1,20 @@
-package com.schottenTotten.model;
+package main.java.com.schottenTotten.model;
+
+
+import main.java.com.schottenTotten.model.Carte;
+import main.java.com.schottenTotten.model.Borne;
+import main.java.com.schottenTotten.model.Joueur;
+import main.java.com.schottenTotten.model.Pioche;
+import main.java.com.schottenTotten.view.InputHandler;
+
+
+
 
 public class CarteTactique extends Carte {
 
-    // Enum pour les différents types de cartes tactiques
     public enum TypeTactique {
-        JOKER,       // Carte Joker
-        ESPION,      // Carte Clan de valeur 7
-        PORTE_BOUCLIER, // Carte Clan de valeur 1, 2 ou 3
-        COLIN_MAILLARD, // Règle spéciale pour la borne
-        COMBAT_DE_BOUE, // Nécessite 4 cartes par côté
-        CHASSEUR_DE_TETE, // Pioche trois cartes, en choisit deux
-        STRATEGE,     // Déplace une carte entre bornes
-        BANSHEE,      // Retire une carte adverse
-        TRAITRE       // Déplace une carte adverse
+        JOKER, ESPION, PORTE_BOUCLIER, COLIN_MAILLARD, COMBAT_DE_BOUE,
+        CHASSEUR_DE_TETE, STRATEGE, BANSHEE, TRAITRE
     }
 
     private TypeTactique type;
@@ -31,69 +33,50 @@ public class CarteTactique extends Carte {
         return "Carte Tactique: " + type + " [" + super.toString() + "]";
     }
 
-    // Méthodes spécifiques aux effets de chaque carte tactique
-    public void appliquerEffet(Joueur joueur, Borne borne, boolean activation) {
+    public Carte appliquerEffet(Joueur joueur, Borne borne, boolean activation, Pioche pioche) {
         switch (type) {
             case JOKER:
-                if (activation){
-                    // Choisir la couleur et la valeur au moment de revendiquer
-                    System.out.println(joueur.getPseudo() + " doit choisir la couleur et la valeur du Joker");
-                }
-                else {
-                    // Se comporte comme une carte Clan classique
+                if (activation) {
+                    int valeur = InputHandler.demanderEntree(1, 8);
+                    int indexCouleur = InputHandler.demanderEntree(1,8);
+                    return new Carte(valeur, pioche.getTabCouleurs()[indexCouleur]);
+                } else {
+                    joueur.setJokerPlayed(true);
                     borne.ajouterCarte(joueur, this);
                 }
                 break;
+
             case ESPION:
-                if (activation){
-                    // Choisir la couleur et la valeur au moment de revendiquer
-                    System.out.println(joueur.getPseudo() + " doit choisir la couleur de L'espion");
-                }
-                else {
-                    // Se comporte comme une carte Clan classique
+                if (activation) {
+                    int indexCouleur = InputHandler.demanderEntree(1,8);
+                    return new Carte(7, pioche.getTabCouleurs()[indexCouleur]);
+                } else {
                     borne.ajouterCarte(joueur, this);
                 }
                 break;
 
             case PORTE_BOUCLIER:
-                if (activation){
-                    // Choisir la couleur et la valeur au moment de revendiquer
-                    System.out.println(joueur.getPseudo() + " doit choisir la couleur et la valeur du porte-bouclier");
-                }
-                else {
-                    // Se comporte comme une carte Clan classique
+                if (activation) {
+                    int valeur = InputHandler.demanderEntree(1, 3);
+                    int indexCouleur = InputHandler.demanderEntree(1,8);
+                    return new Carte(valeur, pioche.getTabCouleurs()[indexCouleur]);
+                } else {
                     borne.ajouterCarte(joueur, this);
                 }
-            break;
+                break;
+
             case COLIN_MAILLARD:
-                // Change les règles de la borne
-                //borne.appliquerRegleSpeciale("COLIN_MAILLARD");
-                break;
-
             case COMBAT_DE_BOUE:
-                // Change les règles de la borne pour 4 cartes par côté
-                //borne.appliquerRegleSpeciale("COMBAT_DE_BOUE");
-                break;
-
             case CHASSEUR_DE_TETE:
-                // Pioche trois cartes et réorganise
-                System.out.println(joueur.getPseudo() + " active Chasseur de Tête");
-                break;
-
             case STRATEGE:
-                // Déplace ou défausse une carte
-                System.out.println(joueur.getPseudo() + " active Stratège");
-                break;
-
             case BANSHEE:
-                // Retire une carte adverse
-                System.out.println(joueur.getPseudo() + " active Banshee");
+            case TRAITRE:
+                // Implémentations spécifiques ici
                 break;
 
-            case TRAITRE:
-                // Déplace une carte adverse
-                System.out.println(joueur.getPseudo() + " active Traître");
-                break;
+            default:
+                throw new UnsupportedOperationException("Effet non implémenté pour le type : " + type);
         }
+        return null; // Par défaut, pas de carte créée
     }
 }
