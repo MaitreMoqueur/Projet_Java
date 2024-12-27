@@ -158,18 +158,18 @@ public class MenuPrincipal {
         // Choix de la variante
         System.out.println("Choisissez la variante :");
         System.out.println("1. Classique");
-        System.out.println("2. Tactique");
-        System.out.println("3. Expert");
+        System.out.println("2. Tactique (non implémentée)");
+        System.out.println("3. Expert (non implémentée)");
         int choix = demanderEntree(scanner, 1, 3);
         switch (choix) {
             case 1:
                 variante = Variante.CLASSIQUE;
                 break;
             case 2:
-                variante = Variante.TACTIQUE;
+                variante = Variante.CLASSIQUE; //Pour rester sur la variante classique
                 break;
             case 3:
-                variante = Variante.EXPERT;
+                variante = Variante.CLASSIQUE; //Pour rester sur la variante classique
                 break;
         }
         ConsoleView.nettoyerConsole();
