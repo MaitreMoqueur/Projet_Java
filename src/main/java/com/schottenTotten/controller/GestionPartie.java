@@ -71,6 +71,7 @@ public class GestionPartie {
             int indexCarte = resultat.get(0);
             Carte carte = joueurIA.getMain().getCarte(indexCarte);
             int indexBorne = resultat.get(1);
+            liste_bornes.get(indexBorne).ajouterCarte(joueurIA, carte);
             joueurIA.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
             if (!(carte instanceof CarteTactique)) {
                 carteClanPlayed = true;
@@ -79,10 +80,15 @@ public class GestionPartie {
                 joueurIA.incrementerCarteTactiquePlayed();
             }
             view.afficherCarteJoueeSurBorne(carte, indexBorne);
-            int conti = resultat.get(2);
-                if (conti == 0){
-                    continuer = false;
-                }
+            if (variante == Variante.CLASSIQUE){
+                continuer = false;
+            }
+            else{
+                int conti = resultat.get(2);
+                    if (conti == 0){
+                        continuer = false;
+                    }
+            }
         }
         
 
@@ -160,25 +166,31 @@ public class GestionPartie {
             System.out.print("Sur quelle Borne ? ");
             List<Integer> bornesjouable = getlistbornesjouable(liste_bornes, joueurReel);
             int indexBorne = InputHandler.inputinlist(bornesjouable);
-            if (joueurReel.getMain().getCarte(indexCarte) instanceof CarteTactique) {
-                if (joueurReel.getCarteTactiquePlayed() < joueurAdverse.getCarteTactiquePlayed() + 1){
-                    joueurReel.incrementerCarteTactiquePlayed(); 
-                   // joueurReel.getMain().getCarte(indexCarte).appliquerEffet(joueurReel, liste_bornes.get(indexBorne), false, pioche, piocheTactique);
-                    joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
+            if (variante == Variante.CLASSIQUE){
+                liste_bornes.get(indexBorne).ajouterCarte(joueurReel, joueurReel.getMain().getCarte(indexCarte));
+                joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
+            }
+            else{
+                if (joueurReel.getMain().getCarte(indexCarte) instanceof CarteTactique) {
+                    if (joueurReel.getCarteTactiquePlayed() < joueurAdverse.getCarteTactiquePlayed() + 1){
+                        joueurReel.incrementerCarteTactiquePlayed(); 
+                    // joueurReel.getMain().getCarte(indexCarte).appliquerEffet(joueurReel, liste_bornes.get(indexBorne), false, pioche, piocheTactique);
+                        joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
+                    }
+                    else {
+                        //Message
+                    }
+                    
+                } else {
+                    if (!carteClanPlayed){
+                        carteClanPlayed = true;
+                        joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
+                    }
+                    else{
+                        //Message
+                    }
+                    
                 }
-                else {
-                    //Message
-                }
-                
-            } else {
-                if (!carteClanPlayed){
-                    carteClanPlayed = true;
-                    joueurReel.jouerCarte(indexCarte, liste_bornes.get(indexBorne));
-                }
-                else{
-                    //Message
-                }
-                
             }
             
 
