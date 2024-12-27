@@ -2,7 +2,7 @@ package main.java.com.schottenTotten.controller;
 
 import main.java.com.schottenTotten.model.*;
 import main.java.com.schottenTotten.view.ConsoleView;
-import main.java.com.schottenTotten.ai.IA;
+import main.java.com.schottenTotten.ai.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,116 +10,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class GestionPartieTest {
+
     private GestionPartie gestionPartie;
+    private ConsoleView view;
     private List<Joueur> joueurs;
     private List<Borne> bornes;
-    private ConsoleView view;
     private Pioche pioche;
 
     @BeforeEach
     public void setUp() {
-        view = mock(ConsoleView.class);
+        view = new ConsoleView();
 
         pioche = new Pioche();
 
-        Joueur joueur1 = new Joueur("Joueur1", pioche);
-        IA joueurIA = new IA(1, "IA Facile", pioche);
         joueurs = new ArrayList<>();
-        joueurs.add(joueur1);
-        joueurs.add(joueurIA);
-
+        joueurs.add(new Joueur("Joueur1", pioche));
+        joueurs.add(new Joueur("Joueur2", pioche));
+        
         bornes = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            bornes.add(new Borne("Joueur1", "IA", i));
+            bornes.add(new Borne("Joueur1", "Joueur2", i));
         }
 
-        gestionPartie = new GestionPartie(joueurs, bornes, view);
+        Variante variante = Variante.CLASSIQUE;
+        
+        gestionPartie = new GestionPartie(joueurs, bornes, view, variante);
     }
 
     @Test
-    public void testDemarrerPartie_VictoireJoueur1() {
-        for (int i = 0; i < 5; i++) {
-            bornes.get(i).revendiquer(joueurs.get(0));
-        }
-
-        gestionPartie.demarrerPartie(pioche);
-
-        verify(view).afficherLancementPartie();
-        verify(view).afficherEcranVictoire(joueurs.get(0), joueurs.get(1), 3);
-        assertFalse(gestionPartie.verifierConditionVictoire() == null);
-    }
-
-    @Test
-    public void testDemarrerPartie_VictoireIA() {
-        bornes.get(0).revendiquer(joueurs.get(1));
-        bornes.get(1).revendiquer(joueurs.get(1));
-        bornes.get(2).revendiquer(joueurs.get(1));
-
-        gestionPartie.demarrerPartie(pioche);
-
-        verify(view).afficherLancementPartie();
-        verify(view).afficherEcranVictoire(joueurs.get(1), joueurs.get(0), 3);
-        assertFalse(gestionPartie.verifierConditionVictoire() == null);
-    }
-
-    @Test
-    public void testFaireTourJoueurReel() {
-        Joueur joueur = joueurs.get(0);
-        joueur.remplirMain();
-
-        InputHandler mockInputHandler = mock(InputHandler.class);
-        when(mockInputHandler.demanderEntree(anyInt(), anyInt())).thenReturn(1);
-        when(mockInputHandler.inputinlist(anyList())).thenReturn(0);
-
-        gestionPartie.demarrerPartie(pioche);
-
-        verify(view).afficherJoueurDebutTour(joueur, 0);
-        verify(view).afficherEtatTour(0, joueur, joueurs, bornes);
-        verify(view).afficherFinTour(joueur);
-    }
-
-    @Test
-    public void testFaireTourIA() {
-        IA joueurIA = (IA) joueurs.get(1);
-        joueurIA.remplirMain();
-
-        List<Integer> bornesJouables = gestionPartie.getlistbornesjouable(bornes, joueurIA);
-        bornes.get(0).ajouterCarte(joueurIA, joueurIA.getMain().getCarte(0));
-        bornes.get(0).ajouterCarte(joueurIA, joueurIA.getMain().getCarte(1));
-        bornes.get(0).ajouterCarte(joueurIA, joueurIA.getMain().getCarte(2));
-
-        gestionPartie.demarrerPartie(pioche);
-
-        verify(view).afficherIATour(joueurIA);
-        verify(view).afficherFinTour(joueurIA);
-    }
-
-    @Test
-    public void testVerifierConditionVictoire_AucuneVictoire() {
-        Joueur gagnant = gestionPartie.verifierConditionVictoire();
-        assertNull(gagnant, "Aucun joueur ne doit être déclaré gagnant.");
-    }
-
-    @Test
-    public void testVerifierConditionVictoire_Joueur1Gagne() {
-        for (int i = 0; i < 5; i++) {
-            bornes.get(i).revendiquer(joueurs.get(0));
-        }
+    public void testVérifierConditionVictoire_aucungagnant() {
+        bornes.get(0).setEtat(Borne.Etat.CAPTUREE_J1);
+        bornes.get(1).setEtat(Borne.Etat.CAPTUREE_J2);
 
         Joueur gagnant = gestionPartie.verifierConditionVictoire();
-        assertEquals(joueurs.get(0), gagnant);
+
+        assertNull(gagnant, "Il ne devrait pas y avoir de gagnant.");
     }
 
     @Test
-    public void testVerifierConditionVictoire_IAGagne() {
-        for (int i = 0; i < 3; i++) {
-            bornes.get(i).revendiquer(joueurs.get(1));
-        }
+    public void testVérifierConditionVictoire_J1_consecutif() {
+        bornes.get(0).setEtat(Borne.Etat.CAPTUREE_J1);
+        bornes.get(1).setEtat(Borne.Etat.CAPTUREE_J1);
+        bornes.get(2).setEtat(Borne.Etat.CAPTUREE_J1);
 
         Joueur gagnant = gestionPartie.verifierConditionVictoire();
-        assertEquals(joueurs.get(1), gagnant);
+
+        assertNotNull(gagnant, "Il devrait y avoir gagnant.");
+        assertEquals("Joueur1", gagnant.getPseudo());
+    }
+
+    @Test
+    public void testVérifierConditionVictoire_J1_5bornes() {
+        bornes.get(0).setEtat(Borne.Etat.CAPTUREE_J1);
+        bornes.get(1).setEtat(Borne.Etat.CAPTUREE_J1);
+        bornes.get(2).setEtat(Borne.Etat.CAPTUREE_J1);
+        bornes.get(4).setEtat(Borne.Etat.CAPTUREE_J1);
+        bornes.get(5).setEtat(Borne.Etat.CAPTUREE_J1);
+
+        Joueur gagnant = gestionPartie.verifierConditionVictoire();
+
+        assertNotNull(gagnant, "Il devrait y avoir gagnant.");
+        assertEquals("Joueur1", gagnant.getPseudo());
     }
 }

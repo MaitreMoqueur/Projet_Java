@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    protected static int nombre_cartes = 6;
+    protected int nombre_cartes = 6;
     protected List<Carte> cartes = new ArrayList<>();
 
     public Hand(Pioche pioche) {
@@ -30,6 +30,7 @@ public class Hand {
         if (index < 0 || index >= cartes.size()) {
             throw new IndexOutOfBoundsException("Index de carte invalide !");
         }
+        this.nombre_cartes--;
         return cartes.remove(index);
     }
 

@@ -35,23 +35,14 @@ public class Borne {
                 if (cartesJoueur1.size() < 3) {
                     cartesJoueur1.add(carte);
                 }
-                /*else {
-                    System.out.println("Il y a déjà 3 cartes jouées, impossible d'en rajouter une.");
-                }*/
             } 
             else {
                 if (cartesJoueur2.size() < 3) {
                     cartesJoueur2.add(carte);
                 }
-                /*else {
-                    System.out.println("Il y a déjà 3 cartes jouées, impossible d'en rajouter une.");
-                }*/
             }
             dernier_joueur = joueur.pseudo;
         }
-        /*else {
-            System.out.println("Cette borne a déjà été revendiquée.");
-        }*/
     }
 
     private boolean estSuiteCouleur(List<Carte> cartes) {
@@ -128,7 +119,7 @@ public class Borne {
 
             if (joueur.pseudo == pseudoJ1) {
                 if (combo1 > combo2 || (combo1 == combo2 && somme(cartesJoueur1) > somme(cartesJoueur2)) || (combo1 == combo2 && somme(cartesJoueur1) == somme(cartesJoueur2) && dernier_joueur.equals(pseudoJ2))) {
-                    etat = Etat.CAPTUREE_J1;
+                    setEtat(Etat.CAPTUREE_J1);
                     return true;
                 }
                 else {
@@ -138,7 +129,7 @@ public class Borne {
             }
             else {
                 if (combo2 > combo1 || (combo1 == combo2 && somme(cartesJoueur2) > somme(cartesJoueur1)) || (combo1 == combo2 && somme(cartesJoueur1) == somme(cartesJoueur2) && dernier_joueur.equals(pseudoJ1))) {
-                    etat = Etat.CAPTUREE_J2;
+                    setEtat(Etat.CAPTUREE_J2);
                     return true;
                 }
                 else {
@@ -151,9 +142,12 @@ public class Borne {
         }
     }
     
-
     public Etat getEtat() {
         return etat;
+    }
+
+    public void setEtat(Etat state) {
+        this.etat = state;
     }
 
     public List<Carte> getList(Joueur joueur) {

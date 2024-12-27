@@ -12,7 +12,7 @@ public class GestionPartie {
     private final List<Joueur> liste_joueurs;
     private final List<Borne> liste_bornes;
     private final ConsoleView view;
-    private boolean partieEnCours;
+    public boolean partieEnCours; //public pour tests
     private int numeroTour;
     private final Variante variante;
 
